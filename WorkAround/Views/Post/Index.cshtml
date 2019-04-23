@@ -1,0 +1,20 @@
+﻿@model IEnumerable<WorkAround.ViewModels.PostsListViewModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div>
+        <h6>Posts test page 11 22 33</h6>
+        <a asp-area="" asp-controller="Post" asp-action="Create">Create Post</a>
+        @foreach (var post in Model)
+        {
+            <tr>
+                <td>
+                    @post.posts[0].Description
+                </td>
+                <td>
+                    @post.posts[0].Price
+                </td>
+            </tr>
+        }
+    </div>
