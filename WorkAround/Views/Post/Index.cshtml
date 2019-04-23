@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WorkAround.ViewModels.PostsListViewModel>
+﻿@model IEnumerable<WorkAround.Data.Entity.Post>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -10,10 +10,10 @@
         {
             <tr>
                 <td>
-                    @post.posts[0].Description
+                    @post.Description
                 </td>
                 <td>
-                    @post.posts[0].Price
+                    @post.Price
                 </td>
             </tr>
         }
