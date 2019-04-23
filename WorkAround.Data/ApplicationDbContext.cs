@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using WorkAround.Data.Entity;
 
 namespace WorkAround.Data
 {
@@ -9,5 +10,10 @@ namespace WorkAround.Data
         {
             Database.EnsureCreated();
         }
+
+        public DbSet<Post> Post { get; set; }
+
+        public DbSet<Employee> Employee { get; set; }
+
     }
 }
