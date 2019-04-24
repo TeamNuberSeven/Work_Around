@@ -132,9 +132,11 @@ namespace WorkAround.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("ProviderKey");
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -165,15 +167,53 @@ namespace WorkAround.Data.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider");
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Value");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("WorkAround.Data.Entity.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Nickname");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Employee");
+                });
+
+            modelBuilder.Entity("WorkAround.Data.Entity.Post", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Deadline");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int?>("EmployeeId");
+
+                    b.Property<string>("PaymentType");
+
+                    b.Property<double>("Price");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("Post");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -219,6 +259,13 @@ namespace WorkAround.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WorkAround.Data.Entity.Post", b =>
+                {
+                    b.HasOne("WorkAround.Data.Entity.Employee", "Employee")
+                        .WithMany("Posts")
+                        .HasForeignKey("EmployeeId");
                 });
 #pragma warning restore 612, 618
         }
