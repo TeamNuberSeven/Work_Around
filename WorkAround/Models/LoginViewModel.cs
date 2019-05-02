@@ -5,6 +5,10 @@ namespace WorkAround.Models
     public class LoginViewModel
     {
         [Required]
+        [Display(Name = "UserName")]
+        public string UserName { get; set; }
+
+        [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -12,9 +16,6 @@ namespace WorkAround.Models
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-
-        [Display(Name = "RememberMe?")]
-        public bool RememberMe { get; set; }
 
         public string ReturnUrl { get; set; }
     }

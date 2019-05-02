@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WorkAround.Models;
+using WorkAround.Services.Interfaces;
 
 namespace WorkAround.Controllers
 {
@@ -10,11 +11,13 @@ namespace WorkAround.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IUserService _userService;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IUserService userService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -24,23 +27,21 @@ namespace WorkAround.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.Email };
+                var user = new User()
+                {
+                    UserName = model.UserName,
+                    Email = model.Email
+                };
+
                 var result = await _userManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
                 }
             }
             return View(model);
@@ -57,26 +58,25 @@ namespace WorkAround.Controllers
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
+                return View(model);
+
+            var user = _userService.GetByUserName(model.UserName);
+            if (user != null)
             {
-                var result =
-                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                await _signInManager.SignOutAsync();
+
+                var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
+
                 if (result.Succeeded)
                 {
-                    
-                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
-                    else
+                    if (string.IsNullOrEmpty(model.ReturnUrl))
                     {
                         return RedirectToAction("Index", "Home");
                     }
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Incorrect login and (or) password");
+                    return Redirect(model.ReturnUrl);
                 }
             }
+            ModelState.AddModelError("", "Incorrect login and (or) password");
             return View(model);
         }
 

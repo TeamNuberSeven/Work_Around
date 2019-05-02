@@ -17,6 +17,7 @@ using WorkAround.Data.Entities;
 using WorkAround.Services.Interfaces;
 using WorkAround.Services;
 using WorkAround.Services.DTO;
+using WorkAround.Data.Interfaces;
 
 namespace WorkAround
 {
@@ -53,18 +54,8 @@ namespace WorkAround
             })
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services
-                .AddScoped<IRepository<Post, long>, PostRepository>()
-                .AddScoped<IService<PostDTO, long>, PostService>();
-
-            var what = services.BuildServiceProvider();
-            var cont = what.GetRequiredService<ApplicationDbContext>();
-            cont.Users.Add(new IdentityUser
-            {
-                Email = "what",
-                
-            });
-            
+            services.AddTransient<IPostRepository, PostRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
