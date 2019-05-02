@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WorkAround.Data.Entity
+namespace WorkAround.Data.Entities
 {
     public class Employee
     {
