@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\" />
-    <Folder Include="Interfaces\" />
+    <ProjectReference Include="..\WorkAround.Data\WorkAround.Data.csproj" />
   </ItemGroup>
 
 </Project>

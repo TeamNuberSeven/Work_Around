@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.8" />
@@ -16,10 +12,6 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.1" />
     <PackageReference Include="System.Memory" Version="4.5.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\WorkAround.Services\WorkAround.Services.csproj" />
   </ItemGroup>
 
 </Project>

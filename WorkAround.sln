@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkAround", "WorkAround\WorkAround.csproj", "{63219219-F199-4130-A8AD-777EAB4984DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkAround", "WorkAround\WorkAround.csproj", "{63219219-F199-4130-A8AD-777EAB4984DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkAround.Data", "WorkAround.Data\WorkAround.Data.csproj", "{18A656A3-E372-4DFD-B41B-F894C9D2D11B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkAround.Data", "WorkAround.Data\WorkAround.Data.csproj", "{18A656A3-E372-4DFD-B41B-F894C9D2D11B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkAround.Services", "WorkAround.Services\WorkAround.Services.csproj", "{C1BB6910-E837-4978-9C33-EB9DA5AA5A93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkAround.Services", "WorkAround.Services\WorkAround.Services.csproj", "{C1BB6910-E837-4978-9C33-EB9DA5AA5A93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

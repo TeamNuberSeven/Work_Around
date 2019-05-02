@@ -12,6 +12,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WorkAround.Data;
+using WorkAround.Data.Repositories;
+using WorkAround.Data.Entities;
+using WorkAround.Services.Interfaces;
+using WorkAround.Services;
+using WorkAround.Services.DTO;
 
 namespace WorkAround
 {
@@ -47,7 +52,10 @@ namespace WorkAround
                 opt.Password.RequiredLength = 4;
             })
             .AddEntityFrameworkStores<ApplicationDbContext>();
-                
+
+            services
+                .AddScoped<IRepository<Post, long>, PostRepository>()
+                .AddScoped<IService<PostDTO, long>, PostService>();
 
             var what = services.BuildServiceProvider();
             var cont = what.GetRequiredService<ApplicationDbContext>();
