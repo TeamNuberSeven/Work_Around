@@ -17,7 +17,7 @@ namespace WorkAround.Controllers
         }
         public IActionResult Index()
         {
-            var posts = this.context.Posts.ToList();
+            var posts = this.context.Post.ToList();
             return View(posts);
         }
 

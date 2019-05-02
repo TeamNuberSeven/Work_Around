@@ -6,7 +6,7 @@ namespace WorkAround.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<Post> Post { get; set; }
         public DbSet<Employee> Employee { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)

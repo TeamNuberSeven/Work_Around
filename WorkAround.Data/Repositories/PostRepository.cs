@@ -19,16 +19,16 @@ namespace WorkAround.Data.Repositories
 
         public void Create(Post entity)
         {
-            _context.Posts.Add(entity);
+            _context.Post.Add(entity);
             _context.SaveChanges();
         }
 
         public void Delete(long id)
         {
-            var post = _context.Posts.Find(id);
+            var post = _context.Post.Find(id);
             if(post!= null)
             {
-                _context.Posts.Remove(post);
+                _context.Post.Remove(post);
             }
 
             _context.SaveChanges();
@@ -36,7 +36,7 @@ namespace WorkAround.Data.Repositories
 
         public Post Get(long id)
         {
-            return _context.Posts
+            return _context.Post
                 .AsNoTracking()
 //                .Include(item => item.Employee)
                 .FirstOrDefault(item => item.Id == id); 
@@ -44,7 +44,7 @@ namespace WorkAround.Data.Repositories
 
         public IEnumerable<Post> GetList()
         {
-            return _context.Posts;
+            return _context.Post;
         }
 
         public void Save()
@@ -54,7 +54,7 @@ namespace WorkAround.Data.Repositories
 
         public void Update(Post entity)
         {
-            _context.Posts.Update(entity);
+            _context.Post.Update(entity);
         }
 
         public virtual void Dispose(bool disposing)
