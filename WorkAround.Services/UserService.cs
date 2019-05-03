@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Data.Entities;
+using WorkAround.Data.Entities;
 using WorkAround.Data.Repositories;
 using WorkAround.Services.Interfaces;
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Data.Entities;
+using WorkAround.Data.Entities;
 using WorkAround.Data.Interfaces;
 
 namespace WorkAround.Data.Repositories

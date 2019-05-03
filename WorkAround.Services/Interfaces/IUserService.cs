@@ -1,5 +1,5 @@
-﻿using Data.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using WorkAround.Data.Entities;
 
 namespace WorkAround.Services.Interfaces
 {
