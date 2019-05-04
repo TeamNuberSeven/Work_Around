@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using WorkAround.Data;
 using WorkAround.Data.Entities;
 using WorkAround.Data.Repositories;
 using WorkAround.Services.Interfaces;
@@ -10,9 +9,9 @@ namespace WorkAround.Services
     {
         private readonly UserRepository _userRepository;
 
-        public UserService(ApplicationDbContext context)
+        public UserService(UserRepository userRepository)
         {
-            _userRepository = new UserRepository(context);
+            _userRepository = userRepository;
         }
 
         public void CreateItem(User user)
