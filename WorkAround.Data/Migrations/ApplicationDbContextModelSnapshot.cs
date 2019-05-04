@@ -71,6 +71,9 @@ namespace WorkAround.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -109,6 +112,8 @@ namespace WorkAround.Data.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -132,11 +137,9 @@ namespace WorkAround.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -167,11 +170,9 @@ namespace WorkAround.Data.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -180,7 +181,7 @@ namespace WorkAround.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("WorkAround.Data.Entity.Employee", b =>
+            modelBuilder.Entity("WorkAround.Data.Entities.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -194,7 +195,7 @@ namespace WorkAround.Data.Migrations
                     b.ToTable("Employee");
                 });
 
-            modelBuilder.Entity("WorkAround.Data.Entity.Post", b =>
+            modelBuilder.Entity("WorkAround.Data.Entities.Post", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -214,6 +215,16 @@ namespace WorkAround.Data.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("Post");
+                });
+
+            modelBuilder.Entity("WorkAround.Data.Entities.User", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+
+                    b.ToTable("User");
+
+                    b.HasDiscriminator().HasValue("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -261,9 +272,9 @@ namespace WorkAround.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("WorkAround.Data.Entity.Post", b =>
+            modelBuilder.Entity("WorkAround.Data.Entities.Post", b =>
                 {
-                    b.HasOne("WorkAround.Data.Entity.Employee", "Employee")
+                    b.HasOne("WorkAround.Data.Entities.Employee", "Employee")
                         .WithMany("Posts")
                         .HasForeignKey("EmployeeId");
                 });
