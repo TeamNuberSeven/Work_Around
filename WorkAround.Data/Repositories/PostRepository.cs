@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using WorkAround.Data.Entities;
+using WorkAround.Data.Interfaces;
 
 namespace WorkAround.Data.Repositories
 {
-    public class PostRepository : IRepository<Post, long>
+    public class PostRepository : IPostRepository
     {
         private readonly ApplicationDbContext _context;
         private bool _disposed;

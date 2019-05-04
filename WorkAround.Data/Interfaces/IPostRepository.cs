@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using WorkAround.Data.Entities;
-using WorkAround.Services.DTO;
 
-namespace WorkAround.Services.Interfaces
+namespace WorkAround.Data.Interfaces
 {
-    interface IPostService 
+    public interface IPostRepository
     {
         void Create(Post entity);
 

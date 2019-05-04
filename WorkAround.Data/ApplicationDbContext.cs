@@ -8,6 +8,7 @@ namespace WorkAround.Data
     {
         public DbSet<Post> Post { get; set; }
         public DbSet<Employee> Employee { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
         {
