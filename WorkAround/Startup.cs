@@ -39,25 +39,6 @@ namespace WorkAround
 
             services.AddMvc();
 
-
-            //services.Configure<CookiePolicyOptions>(options =>
-            //{
-            //    options.CheckConsentNeeded = context => true;
-            //    options.MinimumSameSitePolicy = SameSiteMode.None;
-            //});
-
-            //services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(
-            //       Configuration.GetConnectionString("DefaultConnection")));
-
-            //services.AddIdentity<User, IdentityRole>()
-            //.AddEntityFrameworkStores<ApplicationDbContext>()
-            //.AddDefaultTokenProviders();
-
-            //services.AddTransient<IPostRepository, PostRepository>();
-            //services.AddTransient<IUserRepository, UserRepository>();
-            //services.AddTransient<IUserService, UserService>();
-
-            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
