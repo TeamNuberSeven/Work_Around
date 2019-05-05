@@ -10,5 +10,6 @@ namespace WorkAround.Data.Entities
         public DateTime Deadline { get; set; }
         public string PaymentType { get; set; }
         public Employee Employee { get; set; }
+        public string Title { get; set; }
     }
 }

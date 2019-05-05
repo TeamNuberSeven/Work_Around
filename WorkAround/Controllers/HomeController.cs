@@ -4,15 +4,23 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WorkAround.Data.Entities;
 using WorkAround.Models;
+using WorkAround.Services.Interfaces;
 
 namespace WorkAround.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IPostService _postService;
+        public HomeController(IPostService postService)
+        {
+            _postService = postService;
+        }
         public IActionResult Index()
         {
-            return View();
+            var posts = this._postService.GetAll();
+            return View(posts);
         }
 
         public IActionResult About()

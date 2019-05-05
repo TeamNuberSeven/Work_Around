@@ -3,18 +3,14 @@
     ViewData["Title"] = "Home Page";
 }
 
-    <div>
-        <h6>Posts test page 11 22 33</h6>
+<div>
+    <div class="btn">
         <a asp-area="" asp-controller="Post" asp-action="Create">Create Post</a>
+    </div>
+    <div class="feed-container">
         @foreach (var post in Model)
         {
-            <tr>
-                <td>
-                    @post.Description
-                </td>
-                <td>
-                    @post.Price
-                </td>
-            </tr>
+            <partial name="_Post" model="post" />
         }
     </div>
+</div>

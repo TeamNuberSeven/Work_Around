@@ -18,13 +18,21 @@ namespace WorkAround.Controllers
         }
         public IActionResult Index()
         {
-            var posts = this._postService.;
+            var posts = this._postService.GetAll();
             return View(posts);
         }
-
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult Create(Post post)
+        {
+            this._postService.CreateItem(post);
+            return RedirectToAction("Index");
+        }
+
     }
 }
