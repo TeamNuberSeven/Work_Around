@@ -1,0 +1,173 @@
+﻿body {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-family: "Roboto"
+}
+
+
+h1 h2 h3 h4 h5 h6 a p {
+    font-family: "Roboto"
+}
+
+.main-page-body {
+    background-image: url("../images/background.jpg");
+    background-attachment: fixed;
+    background-color: #ffffff;
+    background-size: 100%;
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 4rem;
+    padding-top: 5rem;
+}
+
+.navbar-inverse {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 4rem;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: none;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #fff
+}
+
+.navbar-inverse .navbar-brand {
+    color: #fff
+}
+
+.loginForm {
+    background-color: white;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    padding: 4%;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px #807575;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 4rem;
+    width: 100%;
+    background-color: white;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+}
+
+.post-item-container {
+    background: white;
+    width: 70vw;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px #807575;
+    margin-bottom: 15px;
+    line-height: 200px;
+}
+
+.post-item-container img {
+    vertical-align: middle;
+}
+
+.feed-container {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 15px;
+}
+
+.post-title {
+    padding-left: 30px;
+}
+
+.regular-text {
+    font-family: 'Roboto';
+    font-weight: 300;
+    font-size: small;
+    line-height: 20px;
+}
+
+.title-text {
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: medium;
+    line-height: 20px;
+}
+
+.subtitle-text {
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: small;
+    line-height: 20px;
+}
+
+
+
+.btn {
+    position: relative;
+    display: block;
+    margin: 30px auto;
+    padding: 8px;
+    padding-left: 50px;
+    padding-right: 50px;
+    overflow: hidden;
+    border-width: 0;
+    outline: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+    background-color: #2ecc71;
+    color: #ecf0f1;
+    transition: background-color .3s;
+}
+
+.btn:hover, .btn:focus {
+    background-color: #27ae60;
+}
+
+.btn > * {
+    position: relative;
+}
+
+.btn span {
+    display: block;
+    padding: 12px 24px;
+}
+
+.btn:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 0;
+    padding-top: 0;
+    border-radius: 100%;
+    background-color: rgba(236, 240, 241, .3);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.btn:active:before {
+    width: 120%;
+    padding-top: 120%;
+    transition: width .2s ease-out, padding-top .2s ease-out;
+}
+
+#icon-container {
+    padding-top: 10px;
+}
+
+a {
+    color: white;
+    text-decoration: none; /* no underline */
+}
+
+a:hover {
+    color: white;
+    text-decoration: none; /* no underline */
+}

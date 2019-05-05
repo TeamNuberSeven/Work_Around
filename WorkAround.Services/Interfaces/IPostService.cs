@@ -4,18 +4,16 @@ using WorkAround.Services.DTO;
 
 namespace WorkAround.Services.Interfaces
 {
-    interface IPostService 
+    public interface IPostService 
     {
-        void Create(Post entity);
+        IEnumerable<Post> GetAll();
 
-        Post Get(long id);
+        Post GetById(int id);
 
-        IEnumerable<Post> GetList();
+        void CreateItem(Post post);
 
-        void Update(Post entity);
+        void UpdateItem(Post post);
 
-        void Delete(long id);
-
-        void Save();
+        void DeleteById(int id);
     }
 }

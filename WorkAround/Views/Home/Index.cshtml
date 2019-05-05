@@ -1,4 +1,11 @@
-﻿@{
+﻿@model IEnumerable<WorkAround.Data.Entities.Post>
+@{
     ViewData["Title"] = "Home Page";
 }
 
+<div class="feed-container">
+    @foreach(var post in Model)
+    {
+        <partial name="_Post" model="post"/>
+    }
+</div>
