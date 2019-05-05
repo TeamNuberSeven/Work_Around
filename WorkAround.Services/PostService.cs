@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WorkAround.Data;
 using WorkAround.Data.Entities;
 using WorkAround.Data.Interfaces;
 using WorkAround.Data.Repositories;
@@ -7,48 +8,46 @@ using WorkAround.Services.DTO;
 using WorkAround.Services.Interfaces;
 
 namespace WorkAround.Services
-{   
+{
     public class PostService : IPostService
     {
-        private readonly IPostRepository _repository;
+        private readonly PostRepository _repository;
 
-        public PostService(IPostRepository repository)
+        public PostService(ApplicationDbContext applicationDbContext)
         {
-            _repository = repository;
+            _repository = new PostRepository(applicationDbContext);
         }
 
-        public void Create(Post entity)
+        public void CreateItem(Post post)
         {
-            _repository.Create(entity);
-            _repository.Save();
+            if (post != null)
+            {
+                _repository.Create(post);
+            }
         }
 
-        public void Delete(long id)
+        public void DeleteById(int id)
         {
             _repository.Delete(id);
-            _repository.Save();
         }
 
-        public Post Get(long id)
+        public IEnumerable<Post> GetAll()
+        {
+            return _repository.All();
+        }
+
+        public Post GetById(int id)
         {
             return _repository.Get(id);
         }
 
-        public IEnumerable<Post> GetList()
+        public void UpdateItem(Post post)
         {
-            return _repository.GetList();
+            if (post != null)
+            {
+                _repository.Update(post);
+            }
         }
-
-        public void Save()
-        {
-            _repository.Save();
-        }
-
-        public void Update(Post entity)
-        {
-            _repository.Update(entity);
-            _repository.Save();
-        }
-        
     }
 }
+

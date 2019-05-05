@@ -7,16 +7,14 @@ namespace WorkAround.Data.Interfaces
 {
     public interface IPostRepository
     {
-        void Create(Post entity);
+        IEnumerable<Post> All();
 
-        Post Get(long id);
+        Post Get(int id);
 
-        IEnumerable<Post> GetList();
+        void Create(Post post);
 
-        void Update(Post entity);
+        void Update(Post post);
 
-        void Delete(long id);
-
-        void Save();
+        void Delete(int id);
     }
 }

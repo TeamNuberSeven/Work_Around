@@ -1,23 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using WorkAround.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using WorkAround.Data;
-using WorkAround.Data.Entities;
+using System.Threading.Tasks;
+using WorkAround.Models;
+using WorkAround.Services.Interfaces;
+
 
 namespace WorkAround.Controllers
 {
     public class PostController : Controller
     {
-        private readonly ApplicationDbContext context;
-        public PostController(ApplicationDbContext context)
+        private readonly IPostService _postService;
+
+        public PostController(IPostService postService)
         {
-            this.context = context;
+            _postService = postService;
         }
         public IActionResult Index()
         {
-            var posts = this.context.Post.ToList();
+            var posts = this._postService.;
             return View(posts);
         }
 
