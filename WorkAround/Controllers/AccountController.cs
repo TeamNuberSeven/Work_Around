@@ -37,11 +37,15 @@ namespace WorkAround.Controllers
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
-                await _userManager.AddToRoleAsync(user, "Employer");
+                await _userManager.AddToRoleAsync(user, model.Role);
 
-                if (result.Succeeded)
+                if (result.Succeeded && model.Role == "Employer")
                 {
                     return RedirectToAction("Index", "Home");
+                }
+                else if(result.Succeeded && model.Role == "Employee")
+                {
+                    return RedirectToAction("FillDetails", "Employee");
                 }
             }
             return View(model);

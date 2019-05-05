@@ -15,6 +15,6 @@ namespace WorkAround.Services.Interfaces
 
         void UpdateItem(Employee employee);
 
-        void DeleteById(int id);
+        void DeleteById(string id);
     }
 }

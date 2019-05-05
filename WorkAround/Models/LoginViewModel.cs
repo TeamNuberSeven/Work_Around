@@ -9,6 +9,10 @@ namespace WorkAround.Models
         public string UserName { get; set; }
 
         [Required]
+        [Display(Name = "Role")]
+        public string Role { get; set; }
+
+        [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
 

@@ -14,8 +14,4 @@
     <PackageReference Include="System.Memory" Version="4.5.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

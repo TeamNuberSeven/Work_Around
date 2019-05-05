@@ -13,14 +13,17 @@ namespace WorkAround.Controllers
     public class HomeController : Controller
     {
         private readonly IPostService _postService;
-        public HomeController(IPostService postService)
+        private readonly IEmployeeService _employeeService;
+        public HomeController(IPostService postService, IEmployeeService employeeService)
         {
             _postService = postService;
+            _employeeService = employeeService;
         }
         public IActionResult Index()
         {
             var posts = this._postService.GetAll();
-            return View(posts);
+            var employees = this._employeeService.GetAll();
+            return View(new HomeIndexViewModel(posts.ToList(), employees.ToList()));
         }
 
         public IActionResult About()
