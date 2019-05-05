@@ -68,6 +68,17 @@ footer {
     line-height: 200px;
 }
 
+.post-detailed-container {
+    background: white;
+    width: 100%;
+    padding: 10px;
+    height: 70vh;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px #807575;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
 .post-item-container img {
     vertical-align: middle;
 }

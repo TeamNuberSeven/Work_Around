@@ -8,12 +8,12 @@ namespace WorkAround.Services.Interfaces
     {
         IEnumerable<Post> GetAll();
 
-        Post GetById(int id);
+        Post GetById(string id);
 
         void CreateItem(Post post);
 
         void UpdateItem(Post post);
 
-        void DeleteById(int id);
+        void DeleteById(string id);
     }
 }

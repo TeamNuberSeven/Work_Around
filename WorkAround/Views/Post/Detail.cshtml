@@ -1,0 +1,32 @@
+﻿@model WorkAround.Data.Entities.Post
+
+@{
+    ViewData["Title"] = "Post Details";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-8 col-xs-12">
+        <div class="post-detailed-container">
+            <div class="col-xs-12">
+                <div class="row ">
+                    <h5 class="col-xs-12 title-text post-title">@Model.Title</h5>
+                </div>
+                <div>
+                    <h6 class="col-xs-12 regular-text">@Model.Description</h6>
+                </div>
+                <div>
+                    <h6 class="col-xs-2 subtitle-text">Salary: @Model.Price$</h6>
+                    <h6 class="col-xs-1 subtitle-text">@Model.PaymentType</h6>
+                    <h6 class="col-xs-offset-4 col-xs-3 subtitle-text">Deadline: @Model.Deadline.ToString("dd/MM/yyyy")</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-xs-12">
+        <div class="post-detailed-container">
+
+        </div>
+    </div>
+</div>          
+

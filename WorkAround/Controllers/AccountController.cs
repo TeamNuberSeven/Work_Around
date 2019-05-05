@@ -11,13 +11,11 @@ namespace WorkAround.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly IUserService _userService;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IUserService userService)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _userService = userService;
         }
 
         [HttpGet]
@@ -34,10 +32,12 @@ namespace WorkAround.Controllers
                 var user = new User()
                 {
                     UserName = model.UserName,
-                    Email = model.Email
+                    Email = model.Email,
+                    Employer = new Employer()
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
+                await _userManager.AddToRoleAsync(user, "Employer");
 
                 if (result.Succeeded)
                 {
@@ -60,7 +60,7 @@ namespace WorkAround.Controllers
             if (ModelState.IsValid)
                 return View(model);
 
-            var user = _userService.GetByUserName(model.UserName);
+            var user = await _userManager.FindByNameAsync(model.UserName);
             if (user != null)
             {
                 await _signInManager.SignOutAsync();

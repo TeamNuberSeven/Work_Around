@@ -9,12 +9,12 @@ namespace WorkAround.Data.Interfaces
     {
         IEnumerable<Post> All();
 
-        Post Get(int id);
+        Post Get(string id);
 
         void Create(Post post);
 
         void Update(Post post);
 
-        void Delete(int id);
+        void Delete(string id);
     }
 }

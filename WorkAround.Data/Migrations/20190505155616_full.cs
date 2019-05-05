@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace WorkAround.Data.Migrations
 {
-    public partial class init : Migration
+    public partial class full : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +40,8 @@ namespace WorkAround.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -153,6 +154,132 @@ namespace WorkAround.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AuthUser",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Nickname = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false),
+                    ExperienceTime = table.Column<double>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
+                    Employer_UserId = table.Column<string>(nullable: true),
+                    JobConditions = table.Column<string>(nullable: true),
+                    WorkAreaId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuthUser", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuthUser_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AuthUser_AspNetUsers_Employer_UserId",
+                        column: x => x.Employer_UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Post",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    Price = table.Column<double>(nullable: false),
+                    Deadline = table.Column<DateTime>(nullable: false),
+                    PaymentType = table.Column<string>(nullable: true),
+                    EmployeeId = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    EmployerId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Post", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Post_AuthUser_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "AuthUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Post_AuthUser_EmployerId",
+                        column: x => x.EmployerId,
+                        principalTable: "AuthUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rate",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Stars = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rate", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rate_AuthUser_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AuthUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WorkArea",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    EmployeeId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkArea", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WorkArea_AuthUser_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "AuthUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Proffesion",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    AuthUserId = table.Column<string>(nullable: true),
+                    WorkAreaId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Proffesion", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Proffesion_AuthUser_AuthUserId",
+                        column: x => x.AuthUserId,
+                        principalTable: "AuthUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Proffesion_WorkArea_WorkAreaId",
+                        column: x => x.WorkAreaId,
+                        principalTable: "WorkArea",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -189,10 +316,77 @@ namespace WorkAround.Data.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuthUser_UserId",
+                table: "AuthUser",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuthUser_Employer_UserId",
+                table: "AuthUser",
+                column: "Employer_UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuthUser_WorkAreaId",
+                table: "AuthUser",
+                column: "WorkAreaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Post_EmployeeId",
+                table: "Post",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Post_EmployerId",
+                table: "Post",
+                column: "EmployerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Proffesion_AuthUserId",
+                table: "Proffesion",
+                column: "AuthUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Proffesion_WorkAreaId",
+                table: "Proffesion",
+                column: "WorkAreaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rate_UserId",
+                table: "Rate",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkArea_EmployeeId",
+                table: "WorkArea",
+                column: "EmployeeId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AuthUser_WorkArea_WorkAreaId",
+                table: "AuthUser",
+                column: "WorkAreaId",
+                principalTable: "WorkArea",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_AuthUser_AspNetUsers_UserId",
+                table: "AuthUser");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_AuthUser_AspNetUsers_Employer_UserId",
+                table: "AuthUser");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_AuthUser_WorkArea_WorkAreaId",
+                table: "AuthUser");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -209,10 +403,25 @@ namespace WorkAround.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Post");
+
+            migrationBuilder.DropTable(
+                name: "Proffesion");
+
+            migrationBuilder.DropTable(
+                name: "Rate");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "WorkArea");
+
+            migrationBuilder.DropTable(
+                name: "AuthUser");
         }
     }
 }

@@ -27,7 +27,7 @@ namespace WorkAround.Data.Repositories
             _context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
             var post = _context.Post.Find(id);
             if (post != null)
@@ -38,7 +38,7 @@ namespace WorkAround.Data.Repositories
             _context.SaveChanges();
         }
 
-        public Post Get(int id)
+        public Post Get(string id)
         {
             return All().FirstOrDefault(post => post.Id == id);
         }

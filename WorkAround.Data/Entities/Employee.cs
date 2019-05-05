@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace WorkAround.Data.Entities
 {
-    public class Employee
+    public class Employee : AuthUser
     {
-        public int Id { get; set; }
-        public string Nickname { get; set; }
-        public string Description { get; set; }
-        public ICollection<Post> Posts { get; set; }
+        public ICollection<WorkArea> WorkAreas { get; set; }
+        public double ExperienceTime { get; set; }
+        public string UserId { get; set; }
+        public virtual User User { get; set; }
     }
 }

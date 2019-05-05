@@ -35,8 +35,6 @@ namespace WorkAround
                             .AddDefaultTokenProviders();
             services.AddTransient<IPostRepository, PostRepository>();
             services.AddTransient<IPostService, PostService>();
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IUserService, UserService>();
 
             services.AddMvc();
 

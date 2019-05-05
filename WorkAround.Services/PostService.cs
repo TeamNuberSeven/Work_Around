@@ -26,7 +26,7 @@ namespace WorkAround.Services
             }
         }
 
-        public void DeleteById(int id)
+        public void DeleteById(string id)
         {
             _repository.Delete(id);
         }
@@ -36,7 +36,7 @@ namespace WorkAround.Services
             return _repository.All();
         }
 
-        public Post GetById(int id)
+        public Post GetById(string id)
         {
             return _repository.Get(id);
         }
