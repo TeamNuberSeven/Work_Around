@@ -6,48 +6,48 @@ using XUnitTests.MockedRepositories;
 
 namespace XUnitTests.RepositoryTests {
     public class AuthUserRepositoryTest {
-        IAuthUserRepository repo = new MockedAuthUserRepository();
+        readonly IAuthUserRepository _repository = new MockedAuthUserRepository();
 
         [Fact]
         public void TestAll() {
-            var repoData = repo.All();
+            var repoData = _repository.All();
 
-            foreach (var user in repoData) {
-                Assert.Equal(user, user);
+            foreach (var entity in repoData) {
+                Assert.Equal(entity, entity);
             }
         }
 
         [Fact]
         public void TestGetCreate() {
-            var authUser = new AuthUser();
-            authUser.Id = "testId";
+            var entity = new AuthUser();
+            entity.Id = "testId";
 
-            repo.Create(authUser);
+            _repository.Create(entity);
 
-            Assert.Equal(authUser, repo.Get("testId"));
+            Assert.Equal(entity, _repository.Get("testId"));
         }
 
         [Fact]
         public void TestUpdate() {
-            var authUser = repo.All().First();
+            var entity = _repository.All().First();
 
-            authUser.Nickname = "updatedNickname";
+            entity.Nickname = "updatedNickname";
 
-            repo.Update(authUser);
+            _repository.Update(entity);
 
-            Assert.Equal(authUser, repo.Get(authUser.Id));
+            Assert.Equal(entity, _repository.Get(entity.Id));
         }
 
         [Fact]
         public void TestDelete() {
-            var authUser = new AuthUser();
-            authUser.Id = "testId";
+            var entity = new AuthUser();
+            entity.Id = "testId";
 
-            repo.Create(authUser);
+            _repository.Create(entity);
 
-            repo.Delete(authUser.Id);
+            _repository.Delete(entity.Id);
 
-            Assert.Null(repo.Get(authUser.Id));
+            Assert.Null(_repository.Get(entity.Id));
         }
     }
 }
