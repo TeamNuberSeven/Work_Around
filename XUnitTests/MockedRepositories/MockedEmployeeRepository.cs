@@ -39,12 +39,12 @@ namespace XUnitTests.MockedRepositories {
         }
 
         public void Update(Employee post) {
-            var index = Collection.FindIndex(e => e.Id == post.Id);
+            var index = Collection.FindIndex(e => e.UserId == post.UserId);
             Collection[index] = post;
         }
 
         public void Delete(string id) {
-            var index = Collection.FindIndex(e => e.Id == id);
+            var index = Collection.FindIndex(e => e.UserId == id);
             Collection.RemoveAt(index);
         }
     }
