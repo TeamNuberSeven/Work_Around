@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using WorkAround.Data.Entities;
 using WorkAround.Data.Interfaces;
-using WorkAround.Services;
 
 namespace XUnitTests.MockedRepositories {
     class MockedAuthUserRepository : IAuthUserRepository {
@@ -17,8 +15,7 @@ namespace XUnitTests.MockedRepositories {
             var chat = new Chat();
             chat.Id = "mockedId";
 
-            var message = new Message
-            {
+            var message = new Message {
                 Id = "mockedId",
                 Sent = new DateTime(),
                 Text = "mockedText",
@@ -26,22 +23,22 @@ namespace XUnitTests.MockedRepositories {
                 User = authUser
             };
 
-            chat.Messages = new List<Message> { message, message, message };
+            chat.Messages = new List<Message> {message, message, message};
 
-            authUser.Chats = new List<Chat> { chat, chat, chat };
+            authUser.Chats = new List<Chat> {chat, chat, chat};
             authUser.Description = "mockedDescription";
 
             var profession = new Proffesion();
             profession.Id = "mockedId";
             profession.Title = "mockedName";
 
-            authUser.Proffesions = new List<Proffesion> { profession, profession, profession };
+            authUser.Proffesions = new List<Proffesion> {profession, profession, profession};
 
-            var rate = new Rate { User = authUser, Description = "mockedDescription", Id = "mockedId", Stars = 5 };
+            var rate = new Rate {User = authUser, Description = "mockedDescription", Id = "mockedId", Stars = 5};
 
-            authUser.Ratings = new List<Rate> { rate, rate, rate };
+            authUser.Ratings = new List<Rate> {rate, rate, rate};
 
-            AuthUsers = new List<AuthUser> { authUser, authUser, authUser };
+            AuthUsers = new List<AuthUser> {authUser, authUser, authUser};
         }
 
         public IEnumerable<AuthUser> All() {
