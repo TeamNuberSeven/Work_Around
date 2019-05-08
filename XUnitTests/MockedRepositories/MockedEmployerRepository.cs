@@ -35,7 +35,7 @@ namespace XUnitTests.MockedRepositories {
         }
 
         public Employer GetEmployerById(string id) {
-            return Collection.Find(e => e.Id == id);
+            return Collection.Find(e => e.UserId == id);
         }
 
         public void Create(Employer employer) {
@@ -43,12 +43,12 @@ namespace XUnitTests.MockedRepositories {
         }
 
         public void Update(Employer employer) {
-            var index = Collection.FindIndex(e => e.Id == employer.Id);
+            var index = Collection.FindIndex(e => e.UserId == employer.UserId);
             Collection[index] = employer;
         }
 
         public void Delete(string id) {
-            var index = Collection.FindIndex(e => e.Id == id);
+            var index = Collection.FindIndex(e => e.UserId == id);
             Collection.RemoveAt(index);
         }
     }
