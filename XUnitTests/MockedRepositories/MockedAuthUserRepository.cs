@@ -5,7 +5,7 @@ using WorkAround.Data.Interfaces;
 
 namespace XUnitTests.MockedRepositories {
     class MockedAuthUserRepository : IAuthUserRepository {
-        public List<AuthUser> AuthUsers;
+        public List<AuthUser> Collection;
 
         public MockedAuthUserRepository() {
             var authUser = new AuthUser();
@@ -38,29 +38,29 @@ namespace XUnitTests.MockedRepositories {
 
             authUser.Ratings = new List<Rate> {rate, rate, rate};
 
-            AuthUsers = new List<AuthUser> {authUser, authUser, authUser};
+            Collection = new List<AuthUser> {authUser, authUser, authUser};
         }
 
         public IEnumerable<AuthUser> All() {
-            return AuthUsers;
+            return Collection;
         }
 
         public AuthUser Get(string id) {
-            return AuthUsers.Find(user => user.Id == id);
+            return Collection.Find(e => e.Id == id);
         }
 
         public void Create(AuthUser authUser) {
-            AuthUsers.Add(authUser);
+            Collection.Add(authUser);
         }
 
         public void Update(AuthUser authUser) {
-            var index = AuthUsers.FindIndex(user => user.Id == authUser.Id);
-            AuthUsers[index] = authUser;
+            var index = Collection.FindIndex(e => e.Id == authUser.Id);
+            Collection[index] = authUser;
         }
 
         public void Delete(string id) {
-            var index = AuthUsers.FindIndex(user => user.Id == id);
-            AuthUsers.RemoveAt(index);
+            var index = Collection.FindIndex(e => e.Id == id);
+            Collection.RemoveAt(index);
         }
     }
 }

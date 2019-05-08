@@ -4,7 +4,7 @@ using WorkAround.Data.Interfaces;
 
 namespace XUnitTests.MockedRepositories {
     class MockedEmployeeRepository : IEmployeeRepository {
-        public List<Employee> Employees;
+        public List<Employee> Collection;
 
         public MockedEmployeeRepository() {
             var employee = new Employee();
@@ -23,29 +23,29 @@ namespace XUnitTests.MockedRepositories {
 
             employee.WorkAreas = new List<WorkArea> {workArea, workArea, workArea};
 
-            Employees = new List<Employee> {employee, employee, employee};
+            Collection = new List<Employee> {employee, employee, employee};
         }
 
         public IEnumerable<Employee> All() {
-            return Employees;
+            return Collection;
         }
 
         public Employee Get(string id) {
-            return Employees.Find(employee => employee.UserId == id);
+            return Collection.Find(e => e.UserId == id);
         }
 
         public void Create(Employee post) {
-            Employees.Add(post);
+            Collection.Add(post);
         }
 
         public void Update(Employee post) {
-            var index = Employees.FindIndex(employee => employee.Id == post.Id);
-            Employees[index] = post;
+            var index = Collection.FindIndex(e => e.Id == post.Id);
+            Collection[index] = post;
         }
 
         public void Delete(string id) {
-            var index = Employees.FindIndex(employee => employee.Id == id);
-            Employees.RemoveAt(index);
+            var index = Collection.FindIndex(e => e.Id == id);
+            Collection.RemoveAt(index);
         }
     }
 }

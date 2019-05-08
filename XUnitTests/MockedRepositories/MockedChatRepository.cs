@@ -5,7 +5,7 @@ using WorkAround.Data.Interfaces;
 
 namespace XUnitTests.MockedRepositories {
     class MockedChatRepository : IChatRepository {
-        public List<Chat> Chats;
+        public List<Chat> Collection;
 
         public MockedChatRepository() {
             var chat = new Chat();
@@ -21,29 +21,29 @@ namespace XUnitTests.MockedRepositories {
 
             chat.Messages = new List<Message> {message, message, message};
 
-            Chats = new List<Chat> {chat, chat, chat};
+            Collection = new List<Chat> {chat, chat, chat};
         }
 
         public IEnumerable<Chat> All() {
-            return Chats;
+            return Collection;
         }
 
         public Chat GetById(string id) {
-            return Chats.Find(chat => chat.Id == id);
+            return Collection.Find(e => e.Id == id);
         }
 
         public void Create(Chat chat) {
-            Chats.Add(chat);
+            Collection.Add(chat);
         }
 
         public void Update(Chat chat) {
-            var index = Chats.FindIndex(c => c.Id == chat.Id);
-            Chats[index] = chat;
+            var index = Collection.FindIndex(e => e.Id == chat.Id);
+            Collection[index] = chat;
         }
 
         public void Delete(string id) {
-            var index = Chats.FindIndex(c => c.Id == id);
-            Chats.RemoveAt(index);
+            var index = Collection.FindIndex(e => e.Id == id);
+            Collection.RemoveAt(index);
         }
     }
 }
