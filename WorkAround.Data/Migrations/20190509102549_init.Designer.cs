@@ -10,8 +10,8 @@ using WorkAround.Data;
 namespace WorkAround.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190505160012_refresh")]
-    partial class refresh
+    [Migration("20190509102549_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -183,37 +183,58 @@ namespace WorkAround.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("WorkAround.Data.Entities.AuthUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<string>("Nickname");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AuthUser");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("AuthUser");
-                });
-
             modelBuilder.Entity("WorkAround.Data.Entities.Chat", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AuthUserId");
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Chats");
+                });
+
+            modelBuilder.Entity("WorkAround.Data.Entities.Employee", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CVUrl");
+
+                    b.Property<double>("ExperienceTime");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("WorkAround.Data.Entities.Employer", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("JobConditions");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("WorkAreaId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.HasIndex("WorkAreaId");
+
+                    b.ToTable("Employers");
                 });
 
             modelBuilder.Entity("WorkAround.Data.Entities.Message", b =>
@@ -273,15 +294,11 @@ namespace WorkAround.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AuthUserId");
-
                     b.Property<string>("Title");
 
                     b.Property<string>("WorkAreaId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AuthUserId");
 
                     b.HasIndex("WorkAreaId");
 
@@ -326,47 +343,13 @@ namespace WorkAround.Data.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Nickname");
 
                     b.ToTable("User");
 
                     b.HasDiscriminator().HasValue("User");
-                });
-
-            modelBuilder.Entity("WorkAround.Data.Entities.Employee", b =>
-                {
-                    b.HasBaseType("WorkAround.Data.Entities.AuthUser");
-
-                    b.Property<double>("ExperienceTime");
-
-                    b.Property<string>("UserId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Employee");
-
-                    b.HasDiscriminator().HasValue("Employee");
-                });
-
-            modelBuilder.Entity("WorkAround.Data.Entities.Employer", b =>
-                {
-                    b.HasBaseType("WorkAround.Data.Entities.AuthUser");
-
-                    b.Property<string>("JobConditions");
-
-                    b.Property<string>("UserId")
-                        .HasColumnName("Employer_UserId");
-
-                    b.Property<string>("WorkAreaId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.HasIndex("WorkAreaId");
-
-                    b.ToTable("Employer");
-
-                    b.HasDiscriminator().HasValue("Employer");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -416,56 +399,9 @@ namespace WorkAround.Data.Migrations
 
             modelBuilder.Entity("WorkAround.Data.Entities.Chat", b =>
                 {
-                    b.HasOne("WorkAround.Data.Entities.AuthUser")
+                    b.HasOne("WorkAround.Data.Entities.User", "User")
                         .WithMany("Chats")
-                        .HasForeignKey("AuthUserId");
-                });
-
-            modelBuilder.Entity("WorkAround.Data.Entities.Message", b =>
-                {
-                    b.HasOne("WorkAround.Data.Entities.Chat")
-                        .WithMany("Messages")
-                        .HasForeignKey("ChatId");
-
-                    b.HasOne("WorkAround.Data.Entities.AuthUser", "User")
-                        .WithMany()
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("WorkAround.Data.Entities.Post", b =>
-                {
-                    b.HasOne("WorkAround.Data.Entities.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId");
-
-                    b.HasOne("WorkAround.Data.Entities.Employer")
-                        .WithMany("Posts")
-                        .HasForeignKey("EmployerId");
-                });
-
-            modelBuilder.Entity("WorkAround.Data.Entities.Proffesion", b =>
-                {
-                    b.HasOne("WorkAround.Data.Entities.AuthUser")
-                        .WithMany("Proffesions")
-                        .HasForeignKey("AuthUserId");
-
-                    b.HasOne("WorkAround.Data.Entities.WorkArea")
-                        .WithMany("Proffesions")
-                        .HasForeignKey("WorkAreaId");
-                });
-
-            modelBuilder.Entity("WorkAround.Data.Entities.Rate", b =>
-                {
-                    b.HasOne("WorkAround.Data.Entities.AuthUser", "User")
-                        .WithMany("Ratings")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("WorkAround.Data.Entities.WorkArea", b =>
-                {
-                    b.HasOne("WorkAround.Data.Entities.Employee")
-                        .WithMany("WorkAreas")
-                        .HasForeignKey("EmployeeId");
                 });
 
             modelBuilder.Entity("WorkAround.Data.Entities.Employee", b =>
@@ -484,6 +420,49 @@ namespace WorkAround.Data.Migrations
                     b.HasOne("WorkAround.Data.Entities.WorkArea", "WorkArea")
                         .WithMany()
                         .HasForeignKey("WorkAreaId");
+                });
+
+            modelBuilder.Entity("WorkAround.Data.Entities.Message", b =>
+                {
+                    b.HasOne("WorkAround.Data.Entities.Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatId");
+
+                    b.HasOne("WorkAround.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("WorkAround.Data.Entities.Post", b =>
+                {
+                    b.HasOne("WorkAround.Data.Entities.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("WorkAround.Data.Entities.Employer")
+                        .WithMany("Posts")
+                        .HasForeignKey("EmployerId");
+                });
+
+            modelBuilder.Entity("WorkAround.Data.Entities.Proffesion", b =>
+                {
+                    b.HasOne("WorkAround.Data.Entities.WorkArea")
+                        .WithMany("Proffesions")
+                        .HasForeignKey("WorkAreaId");
+                });
+
+            modelBuilder.Entity("WorkAround.Data.Entities.Rate", b =>
+                {
+                    b.HasOne("WorkAround.Data.Entities.User", "User")
+                        .WithMany("Ratings")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("WorkAround.Data.Entities.WorkArea", b =>
+                {
+                    b.HasOne("WorkAround.Data.Entities.Employee")
+                        .WithMany("WorkAreas")
+                        .HasForeignKey("EmployeeId");
                 });
 #pragma warning restore 612, 618
         }

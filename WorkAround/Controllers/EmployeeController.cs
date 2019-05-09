@@ -33,7 +33,7 @@ namespace WorkAround.Controllers
             Employee updatedEmployee = user.Employee;
             updatedEmployee.CVUrl = employee.CVUrl;
             updatedEmployee.ExperienceTime = employee.ExperienceTime;
-            updatedEmployee.Description = employee.Description;
+            updatedEmployee.User.Description = employee.User.Description;
             _employeeSevice.UpdateItem(updatedEmployee);
             return RedirectToAction("Index", "Home");
         }

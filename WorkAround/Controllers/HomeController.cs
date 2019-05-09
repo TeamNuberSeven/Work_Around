@@ -23,7 +23,8 @@ namespace WorkAround.Controllers
         {
             var posts = this._postService.GetAll();
             var employees = this._employeeService.GetAll();
-            return View(new HomeIndexViewModel(posts.ToList(), employees.ToList()));
+            //return View(new HomeIndexViewModel(posts.ToList(), employees.ToList()));
+            return View(posts);
         }
 
         public IActionResult About()

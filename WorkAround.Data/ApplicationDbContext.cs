@@ -15,7 +15,6 @@ namespace WorkAround.Data
         public DbSet<Proffesion> Proffesions { get; set; }
         public DbSet<Rate> Ratings { get; set; }
         public DbSet<User> User { get; set; }
-        public DbSet<AuthUser> AuthUsers { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
         {
@@ -35,6 +34,16 @@ namespace WorkAround.Data
                 .HasOne(p => p.Employer)
                 .WithOne(i => i.User)
                 .HasForeignKey<Employer>(b => b.UserId);
+
+            modelBuilder.Entity<User>()
+                .HasMany(p => p.Ratings)
+                .WithOne(i => i.User)               
+                .HasForeignKey(b => b.UserId);
+
+            modelBuilder.Entity<User>()
+                .HasMany(p => p.Chats)
+                .WithOne(i => i.User)
+                .HasForeignKey(b => b.UserId);
         }
 
 
