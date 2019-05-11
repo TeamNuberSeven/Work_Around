@@ -24,16 +24,15 @@ namespace WorkAround.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<User>()
+                .HasOne(p => p.Employer)
+                .WithOne(i => i.User)
+                .HasForeignKey<Employer>(b => b.UserId);
 
             modelBuilder.Entity<User>()
                 .HasOne(p => p.Employee)
                 .WithOne(i => i.User)
                 .HasForeignKey<Employee>(b => b.UserId);
-
-            modelBuilder.Entity<User>()
-                .HasOne(p => p.Employer)
-                .WithOne(i => i.User)
-                .HasForeignKey<Employer>(b => b.UserId);
 
             modelBuilder.Entity<User>()
                 .HasMany(p => p.Ratings)

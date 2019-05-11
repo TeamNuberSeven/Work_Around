@@ -1,10 +1,10 @@
-﻿@model IEnumerable<WorkAround.Data.Entities.Post>
+﻿@model WorkAround.Models.HomeIndexViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="feed-container">
-    @foreach(var post in Model)
+    @foreach(var post in Model.Posts)
     {
         <partial name="_Post" model="post"/>
     }

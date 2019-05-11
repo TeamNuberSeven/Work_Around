@@ -37,7 +37,8 @@ namespace WorkAround
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddTransient<IEmployeeService, EmployeeService>();
-
+            services.AddTransient<IEmployerService, EmployerService>();
+            services.AddTransient<IEmployerRepository, EmployerRepository>();
             services.AddMvc();
         }
 
