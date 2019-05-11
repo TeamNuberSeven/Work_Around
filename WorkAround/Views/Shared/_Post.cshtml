@@ -2,7 +2,7 @@
 
 <div class="post-item-container row">
     <div class="col-xs-2" id="icon_container">
-        <img id="post_icon" src="~/images/10.png" class="img-responsive" />
+        <img id="post_icon" src="~/images/1.png" class="img-responsive" />
         <input type="button" value="Visit" onclick="location.href = '@Url.Action("Detail", "Post")?id=' + @Model.Id" class="btn"/>
     </div>
         
@@ -20,12 +20,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    var myRand = Math.floor(Math.random() * 24) + 1;
-    var str = "/images/";
-    str += myRand.toString();
-    str += ".png";
-    var ele = document.getElementById("post_icon");
-    ele.setAttribute('src', str);
-</script>

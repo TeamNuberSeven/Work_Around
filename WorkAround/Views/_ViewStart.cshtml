@@ -1,7 +1,7 @@
 ﻿@{
-    @if (Context.User.Identity.IsAuthenticated)
+    @if (Context.User.IsInRole("Employer"))
     {
-        Layout = "_EmployeeLayout";
+        Layout = "_EmployerLayout";
     }
     else {
          Layout = "_Layout";

@@ -11,14 +11,14 @@ namespace WorkAround.Controllers
     public class PostController : Controller
     {
         private readonly IPostService _postService;
-        private readonly UserManager<Employee> _employeeManager;
+        private readonly UserManager<User> _userManager;
         private readonly ILogger _logger;
 
-        public PostController(IPostService postService, ILogger<PostController> logger, UserManager<Employee> employeeService)
+        public PostController(IPostService postService, ILogger<PostController> logger, UserManager<User> userService)
         {
             _postService = postService;
             _logger = logger;
-            _employeeManager = employeeService;
+            _userManager = userService;
         }
         public IActionResult Index()
         {
@@ -35,16 +35,16 @@ namespace WorkAround.Controllers
         public async Task<IActionResult> Detail(string id)
         {
             var post = this._postService.GetById(id);
-            var employee = await this._employeeManager.GetUserAsync(HttpContext.User);
-            var viewModel = new PostDetailViewModel(post, employee);
+            var user = await this._userManager.GetUserAsync(HttpContext.User);
+            var viewModel = new PostDetailViewModel(post, user.Employee);
             return View(viewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(Post post)
         {
-            var employee = await this._employeeManager.GetUserAsync(HttpContext.User);
-            post.Employee = employee;
+            var user = await this._userManager.GetUserAsync(HttpContext.User);
+            post.Employer = user.Employer;
             this._postService.CreateItem(post);
             return RedirectToAction("Index");
         }
