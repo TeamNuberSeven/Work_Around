@@ -36,7 +36,7 @@ namespace WorkAround.Controllers
         {
             var post = this._postService.GetById(id);
             var user = await this._userManager.GetUserAsync(HttpContext.User);
-            var viewModel = new PostDetailViewModel(post, user.AuthUser as Employee);
+            var viewModel = new PostDetailViewModel(post, user.Employee);
             return View(viewModel);
         }
 
@@ -44,7 +44,7 @@ namespace WorkAround.Controllers
         public async Task<IActionResult> Create(Post post)
         {
             var user = await this._userManager.GetUserAsync(HttpContext.User);
-            post.Employer = user.AuthUser as Employer;
+            post.Employer = user.Employer;
             this._postService.CreateItem(post);
             return RedirectToAction("Index");
         }

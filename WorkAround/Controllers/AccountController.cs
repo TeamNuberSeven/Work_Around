@@ -42,8 +42,7 @@ namespace WorkAround.Controllers
                 var user = new User()
                 {
                     UserName = model.UserName,
-                    Email = model.Email,
-                    AuthUser = new AuthUser()
+                    Email = model.Email
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
@@ -51,16 +50,26 @@ namespace WorkAround.Controllers
                     await _userManager.AddToRoleAsync(user, model.Role);
                     await _signInManager.SignOutAsync();
 
-                    await _userManager.UpdateAsync(user);
-
                     var loginResult = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
 
                     if (loginResult.Succeeded && model.Role == "Employer")
                     {
+                        var employer = new Employer()
+                        {
+                            User = user,
+                            UserId = user.Id
+                        };
+                        _employerService.CreateItem(employer);
                         return RedirectToAction("Index", "Home");
                     }
                     else if (loginResult.Succeeded && model.Role == "Employee")
                     {
+                        var employee = new Employee()
+                        {
+                            User = user,
+                            UserId = user.Id
+                        };
+                        _employeeService.CreateItem(employee);
                         return RedirectToAction("FillDetails", "Employee");
                     }
                     else

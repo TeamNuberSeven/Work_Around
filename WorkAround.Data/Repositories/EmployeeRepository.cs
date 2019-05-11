@@ -18,9 +18,7 @@ namespace WorkAround.Data.Repositories
 
         public IEnumerable<Employee> All()
         {
-            var users = _context.User.Where(u => u.AuthUser != null);
-            var employees = users.Select(u => u.AuthUser).Cast<Employee>();
-            return employees;
+            return _context.Employees; ;
         }
 
         public void Create(Employee employee)

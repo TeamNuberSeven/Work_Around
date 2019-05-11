@@ -30,11 +30,12 @@ namespace WorkAround.Controllers
         public async Task<IActionResult> FillDetails(Employee employee)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            Employee updatedEmployee = user.AuthUser as Employee;
+            Employee updatedEmployee = _employeeSevice.GetAll().Where(e => e.UserId == user.Id).First();
             updatedEmployee.CVUrl = employee.CVUrl;
             updatedEmployee.ExperienceTime = employee.ExperienceTime;
-            updatedEmployee.User.Description = employee.User.Description;
+            user.Description = employee.User.Description;
             _employeeSevice.UpdateItem(updatedEmployee);
+            await _userManager.UpdateAsync(user);
             return RedirectToAction("Index", "Home");
         }
     }
