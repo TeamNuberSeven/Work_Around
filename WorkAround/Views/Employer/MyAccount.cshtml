@@ -1,0 +1,39 @@
+﻿@model WorkAround.Data.Entities.Employer
+
+@{
+    ViewData["Title"] = "My Account";
+}
+
+<h2>My Account</h2>
+
+<h4>Employer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="MyAccount">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="WorkArea" class="control-label"></label>
+                <input asp-for="WorkArea" class="form-control" />
+                <span asp-validation-for="WorkArea" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="JobConditions" class="control-label"></label>
+                <input asp-for="JobConditions" class="form-control" />
+                <span asp-validation-for="JobConditions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="User.Description" class="control-label"></label>
+                <textarea asp-for="User.Description" class="form-control" multiple></textarea>
+                <span asp-validation-for="User.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
