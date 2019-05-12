@@ -27,11 +27,22 @@ namespace WorkAround.Controllers
             _employeeService = employeeService;
             _userManager = userManager;
         }
-        public IActionResult Index()
+        public IActionResult Index(string sortBy)
         {
+            var model = new HomeIndexViewModel();
             var posts = this._postService.GetAll();
             var employees = EmployeeMapper.Map(_employeeService.GetAll().ToList(), _userManager.Users.ToList());
-            return View(new HomeIndexViewModel(posts.ToList(), employees));
+            model.Posts = posts.ToList();
+            model.Employees = employees;
+            if (sortBy == "up")
+            {
+                model.Posts.Sort(new SortPosts());
+            }
+            else if(sortBy == "down")
+            {
+                model.Posts.Sort(new SortPostsDown());
+            }
+            return View(model);
         }
 
         public IActionResult About()
@@ -57,6 +68,37 @@ namespace WorkAround.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private class SortPosts : IComparer<Post>
+        {
+            int IComparer<Post>.Compare(Post a, Post b)
+            {
+                if (a.Price > b.Price) {
+                    return 1;
+                }
+                else if(a.Price < b.Price)
+                {
+                    return -1;
+                }
+                return 0;
+            }
+        }
+
+        private class SortPostsDown : IComparer<Post>
+        {
+            int IComparer<Post>.Compare(Post a, Post b)
+            {
+                if (a.Price < b.Price)
+                {
+                    return 1;
+                }
+                else if (a.Price > b.Price)
+                {
+                    return -1;
+                }
+                return 0;
+            }
         }
     }
 }
