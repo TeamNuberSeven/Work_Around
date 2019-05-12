@@ -1,4 +1,4 @@
-﻿@model WorkAround.Data.Entities.Post
+﻿@model WorkAround.Models.PostDetailViewModel
 
 @{
     ViewData["Title"] = "Post Details";
@@ -7,26 +7,34 @@
 
 <div class="row">
     <div class="col-md-8 col-xs-12">
-        <div class="post-detailed-container">
-            <div class="col-xs-12">
-                <div class="row ">
-                    <h5 class="col-xs-12 title-text post-title">@Model.Title</h5>
-                </div>
-                <div>
-                    <h6 class="col-xs-12 regular-text">@Model.Description</h6>
-                </div>
-                <div>
-                    <h6 class="col-xs-2 subtitle-text">Salary: @Model.Price$</h6>
-                    <h6 class="col-xs-1 subtitle-text">@Model.PaymentType</h6>
-                    <h6 class="col-xs-offset-4 col-xs-3 subtitle-text">Deadline: @Model.Deadline.ToString("dd/MM/yyyy")</h6>
-                </div>
+        <div class="col-xs-12 post-detailed-container">
+            <div class="row ">
+                <h5 class="col-xs-12 title-text post-title">@Model.post.Title</h5>
+            </div>
+            <div>
+                <h6 class="col-xs-12 regular-text">@Model.post.Description</h6>
+            </div>
+            <div>
+                <h6 class="col-xs-2 subtitle-text">Salary: @Model.post.Price$</h6>
+                <h6 class="col-xs-1 subtitle-text">@Model.post.PaymentType</h6>
+                <h6 class="col-xs-offset-4 col-xs-3 subtitle-text">Deadline: @Model.post.Deadline.ToString("dd/MM/yyyy")</h6>
             </div>
         </div>
     </div>
     <div class="col-md-4 col-xs-12">
-        <div class="post-detailed-container">
-
+        <div class="col-xs-12 post-detailed-container">
+            <div class="row ">
+                <h5 class="col-xs-12 title-text post-title">Employer: @Model.employer.Nickname</h5>
+            </div>
+            <div>
+                <h6 class="col-xs-12 title-text">Conditions:</h6>
+                <h6 class="col-xs-12 regular-text"> @Model.employer.JobConditions</h6>
+            </div>
+            <div>
+                <h6 class="col-xs-12 subtitle-text">@Model.employer.Description</h6>
+                <h6 class="col-xs-12 subtitle-text">Email: @Model.employer.Email</h6>
+            </div>
         </div>
     </div>
-</div>          
+</div>
 

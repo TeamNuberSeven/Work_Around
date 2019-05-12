@@ -3,7 +3,7 @@
 <div class="post-item-container row">
     <div class="col-xs-2" id="icon_container">
         <img id="post_icon" src="~/images/1.png" class="img-responsive" />
-        <input type="button" value="Visit" onclick="location.href = '@Url.Action("Detail", "Post")?id=' + @Model.Id" class="btn"/>
+        <input type="button" value="Visit" onclick="location.href = '@Url.Action("Detail", "Post")?id=@Model.Id'" class="btn"/>
     </div>
         
     <div class="col-xs-10">
