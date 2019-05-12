@@ -173,6 +173,14 @@ footer {
     padding-top: 10px;
 }
 
+.cv-link {
+    color: black;
+}
+
+.cv-link:hover {
+    color: blue;
+}
+
 a {
     color: white;
     text-decoration: none; /* no underline */
