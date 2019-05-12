@@ -16,7 +16,7 @@ namespace XUnitTests.MockedRepositories {
                 Sent = new DateTime(),
                 Text = "mockedText",
                 Title = "mockedTitle",
-                User = new AuthUser()
+                User = new User()
             };
 
             chat.Messages = new List<Message> {message, message, message};

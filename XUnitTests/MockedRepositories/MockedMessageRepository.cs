@@ -13,7 +13,7 @@ namespace XUnitTests.MockedRepositories {
             message.Sent = new DateTime();
             message.Text = "mockedText";
             message.Title = "mockedTitle";
-            message.User = new AuthUser();
+            message.User = new User();
 
             Collection = new List<Message> {message, message, message};
         }

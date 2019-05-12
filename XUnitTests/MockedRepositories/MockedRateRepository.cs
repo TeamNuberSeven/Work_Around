@@ -7,7 +7,7 @@ namespace XUnitTests.MockedRepositories {
         public List<Rate> Collection;
 
         public MockedRateRepository() {
-            var rate = new Rate {User = new AuthUser(), Description = "mockedDescription", Id = "mockedId", Stars = 5};
+            var rate = new Rate {User = new User(), Description = "mockedDescription", Id = "mockedId", Stars = 5};
 
             Collection = new List<Rate> {rate, rate, rate};
         }

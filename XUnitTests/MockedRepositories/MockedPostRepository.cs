@@ -12,7 +12,7 @@ namespace XUnitTests.MockedRepositories {
                 Id = "mockedId",
                 Deadline = new DateTime(),
                 Description = "mockedDescription",
-                Employee = new Employee(),
+                Employer = new Employer(),
                 PaymentType = "mockedPaymentType",
                 Price = 0.7,
                 Title = "mockedTitle"
