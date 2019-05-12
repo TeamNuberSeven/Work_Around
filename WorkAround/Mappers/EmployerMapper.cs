@@ -28,5 +28,22 @@ namespace WorkAround.Mappers
             });
             return mapper;
         }
+
+
+        public static EmployerViewModel MapOne(Employer employer, User user)
+        {
+            return new EmployerViewModel()
+            {
+                Id = employer.Id,
+                Nickname = user.UserName,
+                Description = user.Description,
+                Ratings = user.Ratings,
+                Chats = user.Chats,
+                Posts = employer.Posts,
+                WorkArea = employer.WorkArea,
+                JobConditions = employer.JobConditions,
+                Email = user.Email
+            };
+        }
     }
 }

@@ -14,11 +14,17 @@ namespace WorkAround.Controllers
     {
         private readonly IEmployeeService _employeeSevice;
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public EmployeeController(IEmployeeService employeeService, UserManager<User> userManager)
+        public EmployeeController(
+                IEmployeeService employeeService,
+                UserManager<User> userManager,
+                SignInManager<User> signInManager
+            )
         {
             _employeeSevice = employeeService;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpGet]
@@ -51,7 +57,8 @@ namespace WorkAround.Controllers
                 Description = user.Description,
                 Email = user.Email,
                 ExperienceTime = employee.ExperienceTime,
-                CVUrl = employee.CVUrl
+                CVUrl = employee.CVUrl,
+                Id = user.Id
             };
             return View(model);
         }
@@ -69,6 +76,17 @@ namespace WorkAround.Controllers
             user.Description = employee.Description;
             await _userManager.UpdateAsync(user);
 
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            await _signInManager.SignOutAsync();
+            var employee = _employeeSevice.GetAll().Where(e => e.UserId == user.Id).First();
+            _employeeSevice.DeleteById(employee.Id);
+            await _userManager.DeleteAsync(user);
             return RedirectToAction("Index", "Home");
         }
     }
