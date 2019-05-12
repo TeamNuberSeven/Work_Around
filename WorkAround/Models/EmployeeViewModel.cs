@@ -16,5 +16,6 @@ namespace WorkAround.Models
         public ICollection<WorkArea> WorkAreas { get; set; }
         public double ExperienceTime { get; set; }
         public string CVUrl { get; set; }
+        public string Email { get; set; }
     }
 }
