@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using WorkAround.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using WorkAround.Models;
+using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
+using WorkAround.Mappers;
 
 namespace WorkAround.Controllers
 {
@@ -12,12 +14,16 @@ namespace WorkAround.Controllers
     {
         private readonly IPostService _postService;
         private readonly UserManager<User> _userManager;
-        private readonly ILogger _logger;
+        private readonly IEmployerService _employerService;
 
-        public PostController(IPostService postService, ILogger<PostController> logger, UserManager<User> userService)
+        public PostController(
+                IPostService postService,
+                UserManager<User> userService,
+                IEmployerService employerService
+            )
         {
             _postService = postService;
-            _logger = logger;
+            _employerService = employerService;
             _userManager = userService;
         }
         public IActionResult Index()
@@ -35,8 +41,10 @@ namespace WorkAround.Controllers
         public async Task<IActionResult> Detail(string id)
         {
             var post = this._postService.GetById(id);
-            var user = await this._userManager.GetUserAsync(HttpContext.User);
-            var viewModel = new PostDetailViewModel(post, user.Employee);
+            var employer = _employerService.GetAll().Where(e => e.Id == post.EmployerId).First();
+            var user = _userManager.Users.Where(u => u.Id == employer.UserId).First();
+            var employerModel = EmployerMapper.MapOne(employer, user);
+            var viewModel = new PostDetailViewModel(post, employerModel);
             return View(viewModel);
         }
 
@@ -44,7 +52,8 @@ namespace WorkAround.Controllers
         public async Task<IActionResult> Create(Post post)
         {
             var user = await this._userManager.GetUserAsync(HttpContext.User);
-            post.Employer = user.Employer;
+            var employer = _employerService.GetAll().Where(e => e.UserId == user.Id).First();
+            post.Employer = employer;
             this._postService.CreateItem(post);
             return RedirectToAction("Index");
         }

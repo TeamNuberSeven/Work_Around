@@ -11,5 +11,6 @@ namespace WorkAround.Data.Entities
         public string PaymentType { get; set; }
         public Employer Employer { get; set; }
         public string Title { get; set; }
+        public string EmployerId { get; set; }
     }
 }

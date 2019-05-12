@@ -8,11 +8,11 @@ namespace WorkAround.Models
 {
     public class PostDetailViewModel
     {
-        public PostDetailViewModel(Post post, Employee employee) {
+        public PostDetailViewModel(Post post, EmployerViewModel employer) {
             this.post = post;
-            this.employee = employee;
+            this.employer = employer;
         }
         public Post post { get; set; }
-        public Employee employee { get; set; }
+        public EmployerViewModel employer { get; set; }
     }
 }
