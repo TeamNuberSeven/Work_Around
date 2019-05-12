@@ -20,6 +20,7 @@
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
             </div>
+            <span class="text-danger">@Model.Error</span>
             <div class="form-group pull-right formPullRightButton">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" class="btn btn-success" value="Log in" />

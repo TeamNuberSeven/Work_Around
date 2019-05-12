@@ -37,7 +37,8 @@ namespace WorkAround
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddTransient<IEmployeeService, EmployeeService>();
-
+            services.AddTransient<IEmployerService, EmployerService>();
+            services.AddTransient<IEmployerRepository, EmployerRepository>();
             services.AddMvc();
         }
 
@@ -66,21 +67,21 @@ namespace WorkAround
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            //CreateUserRoles(serviceProvider).Wait();
+            CreateUserRoles(serviceProvider).Wait();
         }
 
         private async Task CreateUserRoles(IServiceProvider serviceProvider)
         {
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<User>>();
 
             IdentityResult roleResult;
             //Adding Admin Role
-            var roleCheck = await RoleManager.RoleExistsAsync("Worker");
+            var roleCheck = await RoleManager.RoleExistsAsync("Employer");
             if (!roleCheck)
             {
                 //create the roles and seed them to the database
-                roleResult = await RoleManager.CreateAsync(new IdentityRole("Worker"));
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("Employer"));
             }
         }
     }

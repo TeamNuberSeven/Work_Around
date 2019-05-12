@@ -6,9 +6,9 @@
 <div>
     <div class="btn">
         <a asp-area="" asp-controller="Post" asp-action="Create">Create Post</a>
-div        @foreach (var post in Model)
-        {
-            <partial name="_Post" model="post" />
-        }
     </div>
+    @foreach (var post in Model)
+    {
+        <partial name="_MyPost" model="post" />
+    }
 </div>

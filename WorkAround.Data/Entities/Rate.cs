@@ -9,6 +9,7 @@ namespace WorkAround.Data.Entities
         public string Id { get; set; }
         public int Stars { get; set; }
         public string Description { get; set; }
-        public AuthUser User { get; set; }
+        public User User { get; set; }
+        public string UserId { get; set; }
     }
 }

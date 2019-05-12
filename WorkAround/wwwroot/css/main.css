@@ -72,7 +72,16 @@ footer {
     background: white;
     width: 100%;
     padding: 10px;
-    height: 70vh;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px #807575;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.post-detailed-employee {
+    background: white;
+    width: 100%;
+    padding: 10px;
     border-radius: 5px;
     box-shadow: 5px 5px 5px #807575;
     margin-bottom: 15px;
@@ -171,6 +180,14 @@ footer {
 
 #icon-container {
     padding-top: 10px;
+}
+
+.cv-link {
+    color: black;
+}
+
+.cv-link:hover {
+    color: blue;
 }
 
 a {

@@ -18,12 +18,12 @@ namespace WorkAround.Data.Repositories
 
         public IEnumerable<Employee> All()
         {
-            return _context.Employees;
+            return _context.Employees; ;
         }
 
-        public void Create(Employee post)
+        public void Create(Employee employee)
         {
-            _context.Employees.Add(post);
+            _context.Employees.Add(employee);
             _context.SaveChanges();
         }
 

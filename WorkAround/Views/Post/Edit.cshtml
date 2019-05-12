@@ -1,18 +1,16 @@
 ﻿@model WorkAround.Data.Entities.Post
 
 @{
-    ViewData["Title"] = "CreatePost";
+    ViewData["Title"] = "EditPost";
     Layout = "~/Views/Shared/_EmployerLayout.cshtml";
 }
 
-<h2>CreatePost</h2>
-
-<h4>Post</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="EmployerId" />
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
@@ -20,7 +18,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control" ></textarea>
+                <textarea asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -39,16 +37,12 @@
                 <span asp-validation-for="PaymentType" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Submit" class="btn btn-default" />
+            </div>
+
+            <div class="form-group">
+                <input type="button" value="Delete Post" onclick="location.href = '@Url.Action("Delete", "Post")?id=@Model.Id'" class="btn btn-danger" />
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

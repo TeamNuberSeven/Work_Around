@@ -1,0 +1,22 @@
+﻿@model  WorkAround.Models.EmployeeViewModel
+
+    <div class="post-item-container row">
+        <div class="col-xs-2" id="icon_container">
+            <img id="post_icon" src="~/images/20.png" class="img-responsive" />
+            <input type="button" value="Visit" onclick="location.href = '@Url.Action("Employee", "Index")?id=' + @Model.Id" class="btn" />
+        </div>
+
+        <div class="col-xs-10">
+            <div class="row ">
+                <h5 class="col-xs-12 title-text post-title">@Model.Nickname</h5>
+            </div>
+            <div>
+                <h6 class="col-xs-12 regular-text">@Model.Description</h6>
+            </div>
+            <div>
+                <h6 class="col-xs-12 subtitle-text">Experience: @Model.ExperienceTime years</h6>
+                <h6 class="col-xs-12 subtitle-text">CV: <a href="@Model.CVUrl" class="cv-link">@Model.CVUrl</a></h6>
+            </div>
+        </div>
+    </div>
+
