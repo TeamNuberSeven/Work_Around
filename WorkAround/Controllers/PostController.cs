@@ -58,5 +58,24 @@ namespace WorkAround.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public IActionResult Edit(string id)
+        {
+            Post post = _postService.GetById(id);
+            return View(post);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Post post)
+        {
+            _postService.UpdateItem(post);
+            return RedirectToAction("Index", "Post");
+        }
+
+        public IActionResult Delete(string id)
+        {
+            _postService.DeleteById(id);
+            return RedirectToAction("Index", "Post");
+        }
     }
 }

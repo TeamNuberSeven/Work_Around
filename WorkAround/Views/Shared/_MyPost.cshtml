@@ -1,0 +1,22 @@
+﻿@model WorkAround.Data.Entities.Post
+
+<div class="post-item-container row">
+    <div class="col-xs-2" id="icon_container">
+        <img id="post_icon" src="~/images/1.png" class="img-responsive" />
+        <input type="button" value="Edit" onclick="location.href = '@Url.Action("Edit", "Post")?id=@Model.Id'" class="btn" />
+    </div>
+
+    <div class="col-xs-10">
+        <div class="row ">
+            <h5 class="col-xs-12 title-text post-title">@Model.Title</h5>
+        </div>
+        <div>
+            <h6 class="col-xs-12 regular-text">@Model.Description</h6>
+        </div>
+        <div>
+            <h6 class="col-xs-2 subtitle-text">Salary: @Model.Price$</h6>
+            <h6 class="col-xs-1 subtitle-text">@Model.PaymentType</h6>
+            <h6 class="col-xs-offset-4 col-xs-3 subtitle-text">Deadline: @Model.Deadline.ToString("dd/MM/yyyy")</h6>
+        </div>
+    </div>
+</div>
