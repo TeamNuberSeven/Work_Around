@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using WorkAround.Data.Entities;
 using WorkAround.Services.Interfaces;
+using WorkAround.Models;
 
 namespace WorkAround.Controllers
 {
@@ -19,20 +20,30 @@ namespace WorkAround.Controllers
         }
 
         [HttpGet]
-        public IActionResult MyAccount()
+        public async Task<IActionResult> MyAccount()
         {
-            return View();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            Employer employer = _employerService.GetAll().Where(e => e.UserId == user.Id).First();
+            EmployerViewModel model = new EmployerViewModel()
+            {
+                Nickname = user.UserName,
+                Description = user.Description,
+                Email = user.Email,
+                JobConditions = employer.JobConditions
+            };
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> MyAccount(Employer employer)
+        public async Task<IActionResult> MyAccount(EmployerViewModel employer)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             Employer newEmployer = _employerService.GetAll().Where(e => e.UserId == user.Id).First();
-            newEmployer.WorkArea = employer.WorkArea;
             newEmployer.JobConditions = employer.JobConditions;
-            newEmployer.Posts = employer.Posts;
             _employerService.UpdateItem(newEmployer);
+            user.Email = employer.Email;
+            user.UserName = employer.Nickname;
+            user.Description = employer.Description;
             await _userManager.UpdateAsync(user);
 
             return RedirectToAction("Index", "Home");

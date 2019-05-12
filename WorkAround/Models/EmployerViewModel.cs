@@ -7,6 +7,7 @@ namespace WorkAround.Models
     {
         public string Nickname { get; set; }
         public string Description { get; set; }
+        public string Email { get; set; }
         public ICollection<Rate> Ratings { get; set; }
         public ICollection<Chat> Chats { get; set; }
         public string Id { get; set; }

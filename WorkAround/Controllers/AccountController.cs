@@ -116,7 +116,7 @@ namespace WorkAround.Controllers
                     return Redirect(model.ReturnUrl);
                 }
             }
-            ModelState.AddModelError("", "Incorrect login and (or) password");
+            model.Error = "Incorrect login and (or) password";
             return View(model);
         }
 

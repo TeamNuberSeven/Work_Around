@@ -22,7 +22,8 @@ namespace WorkAround.Mappers
                     Chats = user.Chats,
                     Posts = e.Posts,
                     WorkArea = e.WorkArea,
-                    JobConditions = e.JobConditions
+                    JobConditions = e.JobConditions,
+                    Email = user.Email
                 });
             });
             return mapper;

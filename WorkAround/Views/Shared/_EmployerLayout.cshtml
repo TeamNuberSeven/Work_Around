@@ -17,13 +17,19 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                         <li>
                             <a asp-area="" asp-controller="Post" asp-action="Index">My Posts</a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="Employer" asp-action="MyAccount">My Account</a>
+                            @if (Context.User.IsInRole("Employer"))
+                            {
+                                <a asp-area="" asp-controller="Employer" asp-action="MyAccount">My Account</a>
+                            }
+                            else
+                            {
+                                <a asp-area="" asp-controller="Employee" asp-action="MyAccount">My Account</a>
+                            }
+
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
