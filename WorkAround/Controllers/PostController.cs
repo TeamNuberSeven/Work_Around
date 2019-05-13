@@ -26,10 +26,13 @@ namespace WorkAround.Controllers
             _employerService = employerService;
             _userManager = userService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var posts = this._postService.GetAll();
-            return View(posts);
+            var user = await this._userManager.GetUserAsync(HttpContext.User);
+            var employer = _employerService.GetAll().Where(e => e.UserId == user.Id).First();
+            var myPosts = posts.Where(p => p.EmployerId == employer.Id).ToList();
+            return View(myPosts);
         }
         [HttpGet]
         public IActionResult Create()
