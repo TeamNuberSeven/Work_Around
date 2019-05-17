@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WorkAround.Data.Entities;
+using WorkAround.Models;
+using WorkAround.Services.Interfaces;
 
 namespace WorkAround.Controllers
 {
     public class AdminController : Controller
     {
         private readonly UserManager<User> _userManager;
+        private readonly IProffesionService _proffesionService;
 
-        public AdminController(UserManager<User> userManager)
+        public AdminController(UserManager<User> userManager, IProffesionService proffesionService)
         {
             _userManager = userManager;
+            _proffesionService = proffesionService;
         }
 
         public IActionResult Index()
@@ -52,5 +56,13 @@ namespace WorkAround.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        public IActionResult AddProffesion(Proffesion proffesion)
+        {
+            _proffesionService.CreateItem(proffesion);
+            return RedirectToAction("Index", "Home");
+        }
+        
     }
 }
