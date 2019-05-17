@@ -77,12 +77,15 @@ namespace WorkAround
 
             IdentityResult roleResult;
             //Adding Admin Role
-            var roleCheck = await RoleManager.RoleExistsAsync("Employer");
+            var roleCheck = await RoleManager.RoleExistsAsync("Admin");
             if (!roleCheck)
             {
                 //create the roles and seed them to the database
-                roleResult = await RoleManager.CreateAsync(new IdentityRole("Employer"));
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
             }
+            User user = await UserManager.FindByEmailAsync("admin@gmail.com");
+            var User = new IdentityUser();
+            await UserManager.AddToRoleAsync(user, "Admin");
         }
     }
 }

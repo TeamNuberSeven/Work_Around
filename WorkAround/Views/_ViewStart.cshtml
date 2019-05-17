@@ -1,9 +1,15 @@
 ﻿@{
     @if (Context.User.Identity.IsAuthenticated)
     {
-        Layout = "_EmployerLayout";
+        if (Context.User.IsInRole("Admin"))
+        {
+            Layout = "_AdminLayout";
+        }else
+        {
+            Layout = "_EmployerLayout";
+        }
     }
     else {
-         Layout = "_Layout";
+        Layout = "_Layout";
     }
 }
