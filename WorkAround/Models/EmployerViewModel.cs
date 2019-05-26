@@ -1,10 +1,16 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WorkAround.Data.Entities;
 
 namespace WorkAround.Models
 {
     public class EmployerViewModel
     {
+        [BindProperty]
+        public string SelectedProffesion { get; set; }
+        public SelectList ProffesionOptions { get; set; }
+
         public string Nickname { get; set; }
         public string Description { get; set; }
         public string Email { get; set; }
