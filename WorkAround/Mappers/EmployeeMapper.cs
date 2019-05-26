@@ -24,7 +24,7 @@ namespace WorkAround.Mappers
                     ExperienceTime = e.ExperienceTime,
                     Ratings = user.Ratings,
                     Chats = user.Chats,
-                    WorkAreas = e.WorkAreas,
+                    Proffesions = e.Proffesions,
                     Email = user.Email
                 });
             });

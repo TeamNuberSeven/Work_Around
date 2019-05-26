@@ -39,6 +39,8 @@ namespace WorkAround
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IEmployerService, EmployerService>();
             services.AddTransient<IEmployerRepository, EmployerRepository>();
+            services.AddTransient<IProffesionService, ProffesionService>();
+            services.AddTransient<IProffesionRepository, ProffesionRepository>();
             services.AddMvc();
         }
 
@@ -77,11 +79,16 @@ namespace WorkAround
 
             IdentityResult roleResult;
             //Adding Admin Role
-            var roleCheck = await RoleManager.RoleExistsAsync("Employer");
+            var roleCheck = await RoleManager.RoleExistsAsync("Admin");
             if (!roleCheck)
             {
                 //create the roles and seed them to the database
-                roleResult = await RoleManager.CreateAsync(new IdentityRole("Employer"));
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+            User user = await UserManager.FindByEmailAsync("admin@gmail.com");
+            if (user != null)
+            {
+               await UserManager.AddToRoleAsync(user, "Admin");
             }
         }
     }

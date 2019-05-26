@@ -199,3 +199,7 @@ a:hover {
     color: white;
     text-decoration: none; /* no underline */
 }
+
+.table-admin {
+    background-color: white
+}

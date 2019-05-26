@@ -21,7 +21,7 @@ namespace WorkAround.Mappers
                     Ratings = user.Ratings,
                     Chats = user.Chats,
                     Posts = e.Posts,
-                    WorkArea = e.WorkArea,
+                    Proffesion = e.Proffesion,
                     JobConditions = e.JobConditions,
                     Email = user.Email
                 });
@@ -40,7 +40,7 @@ namespace WorkAround.Mappers
                 Ratings = user.Ratings,
                 Chats = user.Chats,
                 Posts = employer.Posts,
-                WorkArea = employer.WorkArea,
+                Proffesion = employer.Proffesion,
                 JobConditions = employer.JobConditions,
                 Email = user.Email
             };
