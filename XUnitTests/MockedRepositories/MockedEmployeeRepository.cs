@@ -13,15 +13,13 @@ namespace XUnitTests.MockedRepositories {
             employee.User = new User();
             employee.UserId = "mockedUserId";
 
-            var workArea = new WorkArea();
-            workArea.Id = "mockedId";
-            workArea.Title = "mockedTitle";
+            var proffesion = new Proffesion();
+            proffesion.Id = "mockedId";
+            proffesion.Title = "mockedTitle";
 
             var profession = new Proffesion {Id = "mockedId", Title = "mockedName"};
 
-            workArea.Proffesions = new List<Proffesion> {profession, profession, profession};
-
-            employee.WorkAreas = new List<WorkArea> {workArea, workArea, workArea};
+            employee.Proffesions = new List<Proffesion> { proffesion, proffesion, proffesion };
 
             Collection = new List<Employee> {employee, employee, employee};
         }

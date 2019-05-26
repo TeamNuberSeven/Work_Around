@@ -20,7 +20,7 @@
 </div>
 <br />
 <div class="table-responsive">
-    <table class="table">
+    <table class="table" style="background-color: white">
         <thead>
             <tr class="text-info font-weight-bold">
                 <td>#</td>
@@ -39,16 +39,16 @@
                 <td class="text-center">
                     @if (!await UserManager.IsInRoleAsync(user, "Admin"))
                     {
-                        if (!await UserManager.GetLockoutEnabledAsync(user))
+                        if (await UserManager.IsLockedOutAsync(user))
                         {
-                            <form asp-action="LockUser" asp-route-id="@user.Id">
-                                <input type="submit" class="btn btn-danger" value="Lock" />
+                            <form asp-action="UnlockUser" asp-route-id="@user.Id">
+                                <input type="submit" class="btn btn-success" value="Unlock" />
                             </form>
                         }
                         else
                         {
-                            <form asp-action="UnlockUser" asp-route-id="@user.Id">
-                                <input type="submit" class="btn btn-success" value="Unlock" />
+                            <form asp-action="LockUser" asp-route-id="@user.Id">
+                                <input type="submit" class="btn btn-danger" value="Lock" />
                             </form>
                         }
                     }

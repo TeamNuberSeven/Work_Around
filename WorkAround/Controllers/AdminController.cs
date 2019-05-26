@@ -57,6 +57,11 @@ namespace WorkAround.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult AddProffesion()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult AddProffesion(Proffesion proffesion)
         {

@@ -13,7 +13,7 @@ namespace WorkAround.Models
         public ICollection<Rate> Ratings { get; set; }
         public ICollection<Chat> Chats { get; set; }
         public string Id { get; set; }
-        public ICollection<WorkArea> WorkAreas { get; set; }
+        public ICollection<Proffesion> Proffesions { get; set; }
         public double ExperienceTime { get; set; }
         public string CVUrl { get; set; }
         public string Email { get; set; }

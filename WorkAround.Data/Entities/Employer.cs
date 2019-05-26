@@ -11,7 +11,7 @@ namespace WorkAround.Data.Entities
         public virtual User User { get; set; }
         public ICollection<Post> Posts { get; set; }
         public string JobConditions { get; set; }
-        public WorkArea WorkArea { get; set; }
+        public Proffesion Proffesion { get; set; }
         
     }
 }

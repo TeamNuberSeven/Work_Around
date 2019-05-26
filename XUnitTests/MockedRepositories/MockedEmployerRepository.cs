@@ -25,7 +25,7 @@ namespace XUnitTests.MockedRepositories {
 
             employer.User = new User();
             employer.UserId = "mockedUserId";
-            employer.WorkArea = new WorkArea();
+            employer.Proffesion = new Proffesion();
 
             Collection = new List<Employer> {employer, employer, employer};
         }

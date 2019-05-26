@@ -72,6 +72,10 @@ namespace WorkAround.Controllers
                         _employeeService.CreateItem(employee);
                         return RedirectToAction("FillDetails", "Employee");
                     }
+                    else if(loginResult.Succeeded && model.Role == "Admin")
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
                     else
                     {
                         model.Error = loginResult.ToString();
@@ -107,13 +111,22 @@ namespace WorkAround.Controllers
 
                 var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
 
-                if (result.Succeeded)
+                if (result.Succeeded && !(await _userManager.IsInRoleAsync(user, "Admin")))
                 {
                     if (string.IsNullOrEmpty(model.ReturnUrl))
                     {
                         return RedirectToAction("Index", "Home");
                     }
                     return Redirect(model.ReturnUrl);
+                }
+                else if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+                else if (result.IsLockedOut)
+                {
+                    model.Error = "Your account temporary disabled, contact admin";
+                    return View(model);
                 }
             }
             model.Error = "Incorrect login and (or) password";
