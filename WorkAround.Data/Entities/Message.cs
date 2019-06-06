@@ -11,6 +11,6 @@ namespace WorkAround.Data.Entities
         public string Text { get; set; }
         public DateTime Sent { get; set; }
         public User User { get; set; }
-        public Employer Employer { get; set; }
+        public string EmployerId { get; set; }
     }
 }

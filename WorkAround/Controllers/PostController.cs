@@ -53,11 +53,9 @@ namespace WorkAround.Controllers
 
         [HttpPost]
         public async Task<IActionResult> AddComment(CommentViewModel commentModel) {
-
-            var employer = _employerService.GetById(commentModel.EmployerId);
-
+            
             var comment = new Message {
-                Employer = employer,
+                EmployerId = commentModel.EmployerId,
                 Id = commentModel.Id,
                 Sent = DateTime.Now,
                 Text = commentModel.Text,

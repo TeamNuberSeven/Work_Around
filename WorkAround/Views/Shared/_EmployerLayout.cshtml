@@ -25,6 +25,9 @@
                             <li>
                                 <a asp-area="" asp-controller="Employer" asp-action="MyAccount">My Account</a>
                             </li>
+                            <li>
+                                <a asp-area="" asp-controller="Messages" asp-action="Index">Comments</a>
+                            </li>
                         }
                         @if (Context.User.IsInRole("Employee"))
                         {
