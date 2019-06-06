@@ -12,6 +12,6 @@ namespace WorkAround.Data.Entities
         public ICollection<Post> Posts { get; set; }
         public string JobConditions { get; set; }
         public Proffesion Proffesion { get; set; }
-        
+        public ICollection<Message> Comments { get; set; }
     }
 }
