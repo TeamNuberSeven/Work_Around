@@ -8,6 +8,5 @@ namespace WorkAround.Data.Entities
     {
         public string Id { get; set; }
         public string Title { get; set; }
-        public ICollection<Proffesion> Proffesions { get; set; }
     }
 }
