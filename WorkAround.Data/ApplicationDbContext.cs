@@ -15,6 +15,7 @@ namespace WorkAround.Data
         public DbSet<Proffesion> Proffesions { get; set; }
         public DbSet<Rate> Ratings { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<PostLike> PostLikes { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
         {
