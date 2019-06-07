@@ -242,6 +242,8 @@ namespace WorkAround.Data.Migrations
 
                     b.Property<string>("ChatId");
 
+                    b.Property<string>("EmployerId");
+
                     b.Property<DateTime>("Sent");
 
                     b.Property<string>("Text");
@@ -253,6 +255,8 @@ namespace WorkAround.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ChatId");
+
+                    b.HasIndex("EmployerId");
 
                     b.HasIndex("UserId");
 
@@ -421,6 +425,10 @@ namespace WorkAround.Data.Migrations
                     b.HasOne("WorkAround.Data.Entities.Chat")
                         .WithMany("Messages")
                         .HasForeignKey("ChatId");
+
+                    b.HasOne("WorkAround.Data.Entities.Employer")
+                        .WithMany("Comments")
+                        .HasForeignKey("EmployerId");
 
                     b.HasOne("WorkAround.Data.Entities.User", "User")
                         .WithMany()

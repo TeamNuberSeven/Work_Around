@@ -41,6 +41,8 @@ namespace WorkAround
             services.AddTransient<IEmployerRepository, EmployerRepository>();
             services.AddTransient<IProffesionService, ProffesionService>();
             services.AddTransient<IProffesionRepository, ProffesionRepository>();
+            services.AddTransient<IMessageRepository, MessageRepository>();
+            services.AddTransient<IMessageService, MessageService>();
             services.AddMvc();
         }
 
@@ -84,6 +86,18 @@ namespace WorkAround
             {
                 //create the roles and seed them to the database
                 roleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+            roleCheck = await RoleManager.RoleExistsAsync("Employer");
+            if (!roleCheck)
+            {
+                //create the roles and seed them to the database
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("Employer"));
+            }
+            roleCheck = await RoleManager.RoleExistsAsync("Employee");
+            if (!roleCheck)
+            {
+                //create the roles and seed them to the database
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("Employee"));
             }
             User user = await UserManager.FindByEmailAsync("admin@gmail.com");
             if (user != null)

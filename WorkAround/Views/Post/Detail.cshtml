@@ -35,11 +35,11 @@
                 <h6 class="col-xs-12 subtitle-text">Email: @Model.employer.Email</h6>
             </div>
         </div>
-        <div>
-            <input type="button" value="Comment" onclick="location.href = '@Url.Action("AddComment", "Post")?id=@Model.employer.Id'" class="btn" />
-        </div>
-        @if (Model.IsEmployee) {
-            
+        @if (Model.IsEmployee)
+        {
+            <div>
+                <input type="button" value="Comment" onclick="location.href = '@Url.Action("AddComment", "Post")?id=@Model.employer.Id'" class="btn" />
+            </div>
         }
     </div>
 </div>

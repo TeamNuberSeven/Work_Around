@@ -107,6 +107,8 @@ footer {
     font-weight: 300;
     font-size: small;
     line-height: 20px;
+    overflow:hidden;
+    word-break:break-word;
 }
 
 .title-text {

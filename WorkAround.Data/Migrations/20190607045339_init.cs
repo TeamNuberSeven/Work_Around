@@ -51,6 +51,18 @@ namespace WorkAround.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WorkAreas",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkAreas", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -215,6 +227,58 @@ namespace WorkAround.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Proffesions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    EmployeeId = table.Column<string>(nullable: true),
+                    WorkAreaId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Proffesions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Proffesions_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Proffesions_WorkAreas_WorkAreaId",
+                        column: x => x.WorkAreaId,
+                        principalTable: "WorkAreas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Employers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    JobConditions = table.Column<string>(nullable: true),
+                    ProffesionId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employers_Proffesions_ProffesionId",
+                        column: x => x.ProffesionId,
+                        principalTable: "Proffesions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Employers_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Messages",
                 columns: table => new
                 {
@@ -223,6 +287,7 @@ namespace WorkAround.Data.Migrations
                     Text = table.Column<string>(nullable: true),
                     Sent = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
+                    EmployerId = table.Column<string>(nullable: true),
                     ChatId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -235,73 +300,15 @@ namespace WorkAround.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_Messages_Employers_EmployerId",
+                        column: x => x.EmployerId,
+                        principalTable: "Employers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Messages_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "WorkAreas",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    EmployeeId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WorkAreas", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_WorkAreas_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Employers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserId = table.Column<string>(nullable: true),
-                    JobConditions = table.Column<string>(nullable: true),
-                    WorkAreaId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Employers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Employers_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Employers_WorkAreas_WorkAreaId",
-                        column: x => x.WorkAreaId,
-                        principalTable: "WorkAreas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Proffesions",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    WorkAreaId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Proffesions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Proffesions_WorkAreas_WorkAreaId",
-                        column: x => x.WorkAreaId,
-                        principalTable: "WorkAreas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -315,8 +322,8 @@ namespace WorkAround.Data.Migrations
                     Price = table.Column<double>(nullable: false),
                     Deadline = table.Column<DateTime>(nullable: false),
                     PaymentType = table.Column<string>(nullable: true),
-                    EmployerId = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true)
+                    Title = table.Column<string>(nullable: true),
+                    EmployerId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -378,20 +385,25 @@ namespace WorkAround.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employers_ProffesionId",
+                table: "Employers",
+                column: "ProffesionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Employers_UserId",
                 table: "Employers",
                 column: "UserId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employers_WorkAreaId",
-                table: "Employers",
-                column: "WorkAreaId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Messages_ChatId",
                 table: "Messages",
                 column: "ChatId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_EmployerId",
+                table: "Messages",
+                column: "EmployerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_UserId",
@@ -404,6 +416,11 @@ namespace WorkAround.Data.Migrations
                 column: "EmployerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Proffesions_EmployeeId",
+                table: "Proffesions",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Proffesions_WorkAreaId",
                 table: "Proffesions",
                 column: "WorkAreaId");
@@ -412,11 +429,6 @@ namespace WorkAround.Data.Migrations
                 name: "IX_Ratings_UserId",
                 table: "Ratings",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_WorkAreas_EmployeeId",
-                table: "WorkAreas",
-                column: "EmployeeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -443,9 +455,6 @@ namespace WorkAround.Data.Migrations
                 name: "Post");
 
             migrationBuilder.DropTable(
-                name: "Proffesions");
-
-            migrationBuilder.DropTable(
                 name: "Ratings");
 
             migrationBuilder.DropTable(
@@ -458,10 +467,13 @@ namespace WorkAround.Data.Migrations
                 name: "Employers");
 
             migrationBuilder.DropTable(
-                name: "WorkAreas");
+                name: "Proffesions");
 
             migrationBuilder.DropTable(
                 name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "WorkAreas");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

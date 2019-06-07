@@ -10,7 +10,7 @@ using WorkAround.Data;
 namespace WorkAround.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190511084820_init")]
+    [Migration("20190607045339_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -223,16 +223,16 @@ namespace WorkAround.Data.Migrations
 
                     b.Property<string>("JobConditions");
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("ProffesionId");
 
-                    b.Property<string>("WorkAreaId");
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProffesionId");
+
                     b.HasIndex("UserId")
                         .IsUnique();
-
-                    b.HasIndex("WorkAreaId");
 
                     b.ToTable("Employers");
                 });
@@ -243,6 +243,8 @@ namespace WorkAround.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ChatId");
+
+                    b.Property<string>("EmployerId");
 
                     b.Property<DateTime>("Sent");
 
@@ -255,6 +257,8 @@ namespace WorkAround.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ChatId");
+
+                    b.HasIndex("EmployerId");
 
                     b.HasIndex("UserId");
 
@@ -290,11 +294,15 @@ namespace WorkAround.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("EmployeeId");
+
                     b.Property<string>("Title");
 
                     b.Property<string>("WorkAreaId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("WorkAreaId");
 
@@ -324,13 +332,9 @@ namespace WorkAround.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("EmployeeId");
-
                     b.Property<string>("Title");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
 
                     b.ToTable("WorkAreas");
                 });
@@ -409,13 +413,13 @@ namespace WorkAround.Data.Migrations
 
             modelBuilder.Entity("WorkAround.Data.Entities.Employer", b =>
                 {
+                    b.HasOne("WorkAround.Data.Entities.Proffesion", "Proffesion")
+                        .WithMany()
+                        .HasForeignKey("ProffesionId");
+
                     b.HasOne("WorkAround.Data.Entities.User", "User")
                         .WithOne("Employer")
                         .HasForeignKey("WorkAround.Data.Entities.Employer", "UserId");
-
-                    b.HasOne("WorkAround.Data.Entities.WorkArea", "WorkArea")
-                        .WithMany()
-                        .HasForeignKey("WorkAreaId");
                 });
 
             modelBuilder.Entity("WorkAround.Data.Entities.Message", b =>
@@ -423,6 +427,10 @@ namespace WorkAround.Data.Migrations
                     b.HasOne("WorkAround.Data.Entities.Chat")
                         .WithMany("Messages")
                         .HasForeignKey("ChatId");
+
+                    b.HasOne("WorkAround.Data.Entities.Employer")
+                        .WithMany("Comments")
+                        .HasForeignKey("EmployerId");
 
                     b.HasOne("WorkAround.Data.Entities.User", "User")
                         .WithMany()
@@ -438,6 +446,10 @@ namespace WorkAround.Data.Migrations
 
             modelBuilder.Entity("WorkAround.Data.Entities.Proffesion", b =>
                 {
+                    b.HasOne("WorkAround.Data.Entities.Employee")
+                        .WithMany("Proffesions")
+                        .HasForeignKey("EmployeeId");
+
                     b.HasOne("WorkAround.Data.Entities.WorkArea")
                         .WithMany("Proffesions")
                         .HasForeignKey("WorkAreaId");
@@ -448,13 +460,6 @@ namespace WorkAround.Data.Migrations
                     b.HasOne("WorkAround.Data.Entities.User", "User")
                         .WithMany("Ratings")
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("WorkAround.Data.Entities.WorkArea", b =>
-                {
-                    b.HasOne("WorkAround.Data.Entities.Employee")
-                        .WithMany("WorkAreas")
-                        .HasForeignKey("EmployeeId");
                 });
 #pragma warning restore 612, 618
         }
