@@ -8,8 +8,8 @@ namespace WorkAround.Models
 {
     public class HomeIndexViewModel
     {
-        public List<Post> Posts { get; set; }
-        public List<EmployeeViewModel> Employees { get; set; }
+        public PagedList.IPagedList<Post> Posts { get; set; }
+        public PagedList.IPagedList<EmployeeViewModel> Employees { get; set; }
         public string PriceSortPredicate { get; set; }
         public string TitleSearch { get; set; }
     }

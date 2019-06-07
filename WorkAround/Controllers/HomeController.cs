@@ -9,6 +9,8 @@ using WorkAround.Data.Entities;
 using WorkAround.Mappers;
 using WorkAround.Models;
 using WorkAround.Services.Interfaces;
+using PagedList;
+using WorkAround.Services.DTO;
 
 namespace WorkAround.Controllers
 {
@@ -26,23 +28,27 @@ namespace WorkAround.Controllers
             _postService = postService;
             _employeeService = employeeService;
             _userManager = userManager;
+            
         }
-        public IActionResult Index(string sortBy)
+        public IActionResult Index(string sortBy, int? page)
         {
-            var model = new HomeIndexViewModel();
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
             var posts = this._postService.GetAll();
             var employees = EmployeeMapper.Map(_employeeService.GetAll().ToList(), _userManager.Users.ToList());
-            model.Posts = posts.ToList();
-            model.Employees = employees;
-            if (sortBy == "up")
+            //if (sortBy == "up")
+            //{
+            //    model.Posts.Sort(new SortPosts());
+            //}
+            //else if(sortBy == "down")
+            //{
+            //    model.Posts.Sort(new SortPostsDown());
+            //}
+            return View(new HomeIndexViewModel
             {
-                model.Posts.Sort(new SortPosts());
-            }
-            else if(sortBy == "down")
-            {
-                model.Posts.Sort(new SortPostsDown());
-            }
-            return View(model);
+                Posts = posts.ToPagedList(pageNumber,pageSize),
+                Employees = employees.ToPagedList(pageNumber,pageSize)
+            });
         }
 
         public IActionResult About()

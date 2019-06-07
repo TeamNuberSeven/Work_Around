@@ -18,6 +18,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.1" />
+    <PackageReference Include="PagedList.Mvc" Version="4.5.0" />
+    <PackageReference Include="Paging" Version="1.0.1" />
     <PackageReference Include="System.Memory" Version="4.5.2" />
   </ItemGroup>
 

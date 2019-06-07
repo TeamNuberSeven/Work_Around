@@ -12,13 +12,31 @@
             <button type="button" value="Sort" onclick="location.href = '@Url.Action("Index", "Home")?model=@Model&sortBy=down'" class="btn">Sort Price Down</button>
         </div>
     </div>
-    
-    @foreach(var post in Model.Posts)
+
+    @foreach (var post in Model.Posts)
     {
-        <partial name="_Post" model="post"/>
+        <partial name="_Post" model="post" />
     }
-    @foreach(var employee in Model.Employees)
+    @foreach (var employee in Model.Employees)
     {
         <partial name="_Employee" model="employee" />
     }
+
+    <div style="display: flex; justify-content: center;">
+        Сторінка @(Model.Posts.PageCount  < Model.Posts.PageNumber ? 0 : Model.Posts.PageNumber) з @Model.Posts.PageCount
+    </div>
+    <div style="display: flex; justify-content: center;">
+
+        <ul class="pagination">
+            @* <li class="active"><a href="#!">1</a></li> *@
+
+            @for (int i = 1; i <= Model.Posts.PageCount; ++i)
+            {
+                <li class="waves-effect"> <a class="page-link" href="?page=@i"><strong>@i</strong></a></li>
+
+
+            }
+
+        </ul>
+    </div>
 </div>

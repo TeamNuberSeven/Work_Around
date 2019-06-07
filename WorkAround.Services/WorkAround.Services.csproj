@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="PagedList.Mvc" Version="4.5.0" />
+    <PackageReference Include="Paging" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WorkAround.Data\WorkAround.Data.csproj" />
   </ItemGroup>
 
