@@ -12,5 +12,6 @@ namespace WorkAround.Data.Entities
         public Employer Employer { get; set; }
         public string Title { get; set; }
         public string EmployerId { get; set; }
+        public string WorkAreaId { get; set; }
     }
 }

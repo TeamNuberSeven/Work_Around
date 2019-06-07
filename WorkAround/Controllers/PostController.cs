@@ -7,6 +7,7 @@ using WorkAround.Models;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WorkAround.Mappers;
 
 namespace WorkAround.Controllers
@@ -17,16 +18,19 @@ namespace WorkAround.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IEmployerService _employerService;
         private readonly IMessageService _messageService;
+        private readonly IWorkAreaService _workAreaService;
 
         public PostController(
                 IPostService postService,
                 UserManager<User> userService,
                 IEmployerService employerService,
-                IMessageService messageService)
+                IMessageService messageService, 
+                IWorkAreaService workAreaService)
         {
             _postService = postService;
             _employerService = employerService;
             _messageService = messageService;
+            _workAreaService = workAreaService;
             _userManager = userService;
         }
         public async Task<IActionResult> Index()
@@ -37,10 +41,14 @@ namespace WorkAround.Controllers
             var myPosts = posts.Where(p => p.EmployerId == employer.Id).ToList();
             return View(myPosts);
         }
+
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var model = new PostCreateViewModel {
+                WorkAreaOptions = new SelectList(_workAreaService.GetAll(), nameof(WorkArea.Id), nameof(WorkArea.Title))
+            };
+            return View(model);
         }
 
         [HttpGet]
@@ -75,20 +83,31 @@ namespace WorkAround.Controllers
             var employer = _employerService.GetAll().Where(e => e.Id == post.EmployerId).First();
             var user = _userManager.Users.Where(u => u.Id == employer.UserId).First();
             var employerModel = EmployerMapper.MapOne(employer, user);
-            
+
+            var workArea = _workAreaService.GetById(post.WorkAreaId);
+
             var isEmployee = user.Employee != null;
 
-            var viewModel = new PostDetailViewModel(isEmployee, post, employerModel);
+            var viewModel = new PostDetailViewModel(isEmployee, post, employerModel, workArea.Title);
             return View(viewModel);
         }
         
 
         [HttpPost]
-        public async Task<IActionResult> Create(Post post)
+        public async Task<IActionResult> Create(PostCreateViewModel model)
         {
             var user = await this._userManager.GetUserAsync(HttpContext.User);
             var employer = _employerService.GetAll().Where(e => e.UserId == user.Id).First();
-            post.Employer = employer;
+            var post = new Post {
+                Id = model.Id,
+                Deadline = model.Deadline,
+                Description = model.Description,
+                Employer = employer,
+                PaymentType = model.PaymentType,
+                Price = model.Price,
+                Title = model.Title,
+                WorkAreaId = model.SelectedWorkArea
+            };
             this._postService.CreateItem(post);
             return RedirectToAction("Index");
         }
@@ -97,12 +116,37 @@ namespace WorkAround.Controllers
         public IActionResult Edit(string id)
         {
             Post post = _postService.GetById(id);
-            return View(post);
+            var model = new PostCreateViewModel
+            {
+                WorkAreaOptions = new SelectList(_workAreaService.GetAll(), nameof(WorkArea.Id), nameof(WorkArea.Title)),
+                SelectedWorkArea = post.WorkAreaId,
+                Id = post.Id,
+                Description = post.Description,
+                Price = post.Price,
+                Deadline = post.Deadline,
+                PaymentType = post.PaymentType,
+                Title = post.Title,
+                EmployerId = post.EmployerId
+            };
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult Edit(Post post)
-        {
+        public IActionResult Edit(PostCreateViewModel model) {
+            var employer = _employerService.GetById(model.EmployerId);
+
+            var post = new Post {
+                Id = model.Id,
+                Deadline = model.Deadline,
+                Description = model.Description,
+                Employer = employer,
+                EmployerId = model.EmployerId,
+                PaymentType = model.PaymentType,
+                Price = model.Price,
+                Title = model.Title,
+                WorkAreaId = model.SelectedWorkArea
+            };
+
             _postService.UpdateItem(post);
             return RedirectToAction("Index", "Post");
         }
