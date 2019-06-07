@@ -43,6 +43,8 @@ namespace WorkAround
             services.AddTransient<IProffesionRepository, ProffesionRepository>();
             services.AddTransient<IMessageRepository, MessageRepository>();
             services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<IPostLikeService, PostLikeService>();
+            services.AddTransient<IPostLikeRepository, PostLikeRepository>();
             services.AddMvc();
         }
 

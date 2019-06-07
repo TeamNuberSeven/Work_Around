@@ -9,6 +9,5 @@ namespace WorkAround.Data.Entities
         public string Id { get; set; }
         public string UserId { get; set; }
         public string PostId { get; set; }
-        public bool Liked { get; set; }
     }
 }

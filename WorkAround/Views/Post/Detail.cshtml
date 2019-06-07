@@ -21,6 +21,23 @@
             </div>
         </div>
     </div>
+    <div class="col-md-8 col-xs-12">
+        <div class="col-xs-12 post-detailed-container">
+            <h5>Likes: @Model.likeAmount</h5>
+            <form asp-action="Like">
+                <input type="hidden" asp-for="like.Id" />
+                <input type="hidden" asp-for="like.UserId" />
+                <input type="hidden" asp-for="like.PostId" />
+                <input type="submit" value="Like" class="btn btn-default" />
+            </form>
+            <form asp-action="DisLike">
+                <input type="hidden" asp-for="like.Id" />
+                <input type="hidden" asp-for="like.UserId" />
+                <input type="hidden" asp-for="like.PostId" />
+                <input type="submit" value="DisLike" class="btn btn-default" />
+            </form>
+        </div>
+    </div>
     <div class="col-md-4 col-xs-12">
         <div class="col-xs-12 post-detailed-container">
             <div class="row ">

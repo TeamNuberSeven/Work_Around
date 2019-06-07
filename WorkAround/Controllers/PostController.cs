@@ -17,16 +17,19 @@ namespace WorkAround.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IEmployerService _employerService;
         private readonly IMessageService _messageService;
+        private readonly IPostLikeService _postLikeService;
 
         public PostController(
                 IPostService postService,
                 UserManager<User> userService,
                 IEmployerService employerService,
-                IMessageService messageService)
+                IMessageService messageService, 
+                IPostLikeService postLikeService)
         {
             _postService = postService;
             _employerService = employerService;
             _messageService = messageService;
+            _postLikeService = postLikeService;
             _userManager = userService;
         }
         public async Task<IActionResult> Index()
@@ -68,6 +71,35 @@ namespace WorkAround.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Like(PostLike like) {
+            PostLike postLike = null;
+            try {
+                postLike = _postLikeService.GetAll().First(l => l.UserId == like.UserId);
+            }
+            catch (Exception) {
+            }
+            if (postLike == null) {
+                _postLikeService.CreateItem(like);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DisLike(PostLike like) {
+            PostLike postLike = null;
+
+            try {
+                postLike = _postLikeService.GetById(like.Id);
+            }
+            catch (Exception) {
+            }
+            if (postLike != null) {
+                _postLikeService.DeleteById(like.Id);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
         [HttpGet]
         public async Task<IActionResult> Detail(string id)
         {
@@ -78,11 +110,26 @@ namespace WorkAround.Controllers
             
             var isEmployee = user.Employee != null;
 
-            var viewModel = new PostDetailViewModel(isEmployee, post, employerModel);
+            var likes = _postLikeService.GetAll().Where(l => l.PostId == post.Id).ToList();
+
+            var currUser = await _userManager.GetUserAsync(HttpContext.User);
+            PostLike like;
+            try {
+                like = likes.First(l => l.UserId == currUser.Id);
+            }
+            catch (Exception) {
+                
+                like = new PostLike
+                {
+                    UserId = currUser.Id,
+                    PostId = post.Id
+                };
+            }
+
+            var viewModel = new PostDetailViewModel(isEmployee, post, employerModel, like, likes.Count);
             return View(viewModel);
         }
         
-
         [HttpPost]
         public async Task<IActionResult> Create(Post post)
         {
