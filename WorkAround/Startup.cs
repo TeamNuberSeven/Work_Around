@@ -39,10 +39,13 @@ namespace WorkAround
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IEmployerService, EmployerService>();
             services.AddTransient<IEmployerRepository, EmployerRepository>();
+            services.AddTransient<IMessageService, MessageService>();
             services.AddTransient<IProffesionService, ProffesionService>();
             services.AddTransient<IProffesionRepository, ProffesionRepository>();
             services.AddTransient<IMessageRepository, MessageRepository>();
             services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<IWorkAreaService, WorkAreaService>();
+            services.AddTransient<IWorkAreaRepository, WorkAreaRepository>();
             services.AddMvc();
         }
 
@@ -73,7 +76,7 @@ namespace WorkAround
 
             CreateUserRoles(serviceProvider).Wait();
         }
-
+ 
         private async Task CreateUserRoles(IServiceProvider serviceProvider)
         {
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -87,17 +90,17 @@ namespace WorkAround
                 //create the roles and seed them to the database
                 roleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
             }
-            roleCheck = await RoleManager.RoleExistsAsync("Employer");
-            if (!roleCheck)
-            {
-                //create the roles and seed them to the database
-                roleResult = await RoleManager.CreateAsync(new IdentityRole("Employer"));
-            }
             roleCheck = await RoleManager.RoleExistsAsync("Employee");
             if (!roleCheck)
             {
                 //create the roles and seed them to the database
                 roleResult = await RoleManager.CreateAsync(new IdentityRole("Employee"));
+            }
+            roleCheck = await RoleManager.RoleExistsAsync("Employer");
+            if (!roleCheck)
+            {
+                //create the roles and seed them to the database
+                roleResult = await RoleManager.CreateAsync(new IdentityRole("Employer"));
             }
             User user = await UserManager.FindByEmailAsync("admin@gmail.com");
             if (user != null)
